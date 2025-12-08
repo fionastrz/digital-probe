@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Startseite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <html lang="de">
+  </head>
+  <body>
+    <header class="header">
+      <div><h1>Willkommen!</h1></div>
+    <div id="logout">    
+    <button id="logoutBtn">Logout</button>
+  </div>
+    </header>
+    <main>
+    <form id="antwort-form">    
+      <h2>Was bedeutet Produktivität für dich?</h2>
+      <textarea
+        id="antwort-feld"
+        name="antwort-feld"
+        placeholder="Schreibe deine Gedanken auf ..."
+        maxlength="1000"
+        required
+      ></textarea>
+      <button type="submit">Absenden</button>
+    </form>
+  </main>
+
+    <script src="js/home.js"></script>
+  </body>
+</html>
