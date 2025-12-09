@@ -26,7 +26,7 @@ async function checkUser() {
     data: { user },
   } = await supabaseClient.auth.getUser();
   if (!user) {
-    window.location.href = "login.html"; // zurück zum Login
+    window.location.href = "index.html"; // zurück zum Login
   }
 }
 checkUser();
@@ -58,7 +58,7 @@ document
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   await supabaseClient.auth.signOut();
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 });
 
 // Upload von Bildern
