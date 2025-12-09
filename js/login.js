@@ -7,7 +7,7 @@ const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 function switchToRegister() {
   const container = document.getElementById("form-container");
   container.innerHTML = `
-<h2>Erstelle einen neuen Account</h2>
+<h2>Registrierung</h2>
 <form id="registerForm">
 <label for="reg-email">E-Mail</label>
 <input type="email" id="reg-email" placeholder="E-Mail eingeben" required />
@@ -21,8 +21,6 @@ function switchToRegister() {
 
 <button type="submit">Registrieren</button>
 </form>
-
-<div id="message"></div>
 
 <div class="switch">
 Du hast bereits einen Account? <a href="#" onclick="switchToLogin()">Zum Login</a>
@@ -60,11 +58,9 @@ Du hast noch keinen Account? <a href="#" onclick="switchToRegister()">Jetzt regi
 
 function attachRegisterHandler() {
   const form = document.getElementById("registerForm");
-  const msg = document.getElementById("message");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    msg.textContent = "";
 
     const email = document.getElementById("reg-email").value;
     const password = document.getElementById("reg-password");
