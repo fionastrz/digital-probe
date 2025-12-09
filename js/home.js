@@ -5,6 +5,21 @@ const supabaseKey =
 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+function showToast(message, type) {
+  const container = document.getElementById("toast-container");
+
+  const toast = document.createElement("div");
+  toast.classList.add("toast", type);
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  // Toast nach 3 Sekunden entfernen
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
 // Prüfen ob User eingeloggt ist
 async function checkUser() {
   const {
@@ -45,3 +60,102 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   await supabaseClient.auth.signOut();
   window.location.href = "login.html";
 });
+
+// Upload von Bildern
+document.getElementById("upload-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const fileInput = document.getElementById("upload-file");
+  const commentField = document.getElementById("kommentar-feld");
+
+  const file = fileInput.files[0];
+  const comment = commentField.value.trim();
+
+  if (!file) {
+    showToast("Bitte wähle eine Datei aus!", "error");
+    return;
+  }
+
+  const user = (await supabaseClient.auth.getUser()).data.user;
+  // Eindeutiger Dateiname
+  const fileName = `${user.id}/${Date.now()}-${file.name}`;
+
+  const { data, error } = await supabaseClient.storage
+    .from("images")
+    .upload(fileName, file);
+
+  if (error) {
+    console.log(error);
+    showToast("Upload fehlgeschlagen! ", "error");
+    return;
+  }
+  ///else {
+  //showToast("Bild erfolgreich hochgeladen!", "success");
+
+  // Eingabefeld leeren
+  const { data: insertData, error: dbError } = await supabaseClient
+    .from("image_entries")
+    .insert({
+      file_name: fileName,
+      created_at: new Date(),
+      comment: comment,
+      user_id: user.id,
+    });
+
+  if (dbError) {
+    showToast("DB Error", "error");
+    console.log("DB-Fehler: " + dbError.message);
+    return;
+  }
+  showToast("Erfolgreich gespeichert", "success");
+
+  fileInput.value = "";
+  commentField.value = "";
+});
+
+// Aktuellen User holen
+async function loadUserImages() {
+  const user = (await supabaseClient.auth.getUser()).data.user;
+
+  const { data: entries, error } = await supabaseClient
+    .from("image_entries")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Fehler beim Laden der Einträge:", error);
+    return;
+  }
+
+  if (entries.length > 0) {
+    const title = document.getElementById("bild-hochladen");
+    title.textContent = "Hier kannst du deine Bilder ansehen";
+  }
+
+  const container = document.getElementById("images-container");
+  container.innerHTML = ""; // leeren
+
+  for (const entry of entries) {
+    // Signed URL (30 Minuten gültig)
+    const { data: urlData, error: urlError } = await supabaseClient.storage
+      .from("images")
+      .createSignedUrl(entry.file_name, 60);
+
+    const img = document.createElement("img");
+    img.src = urlData.signedUrl;
+    img.classList.add("uploaded-image");
+
+    const comment = document.createElement("p");
+    comment.textContent = entry.comment;
+
+    const card = document.createElement("div");
+    card.classList.add("image-card");
+
+    card.appendChild(img);
+    card.appendChild(comment);
+    container.appendChild(card);
+  }
+}
+
+loadUserImages();

@@ -8,13 +8,15 @@
     <html lang="de">
   </head>
   <body>
+    <div id="toast-container"></div>
+
     <header class="header">
       <div><h1>Willkommen!</h1></div>
-    <div id="logout">    
-    <button id="logoutBtn">Logout</button>
-  </div>
+      <button id="logoutBtn">Logout</button>
     </header>
+
     <main>
+
     <form id="antwort-form">    
       <h2>Was bedeutet Produktivität für dich?</h2>
       <textarea
@@ -26,6 +28,20 @@
       ></textarea>
       <button type="submit">Absenden</button>
     </form>
+  
+    <form id="upload-form">
+      <h3>Hier kannst du ein Bild hochladen:</h3>
+      <input type="file" id="upload-file" accept="image/*" required>
+
+      <textarea id="kommentar-feld" placeholder="Dein Kommentar zum Bild... "></textarea>
+      <button id="upload-btn" type="submit">Hochladen</button>
+    </form>
+
+    <div>
+      <h3 id="bild-hochladen"></h3>
+      <div id="images-container"></div>
+    </div>
+
   </main>
 
     <script src="js/home.js"></script>
