@@ -12,13 +12,16 @@ function switchToRegister() {
 <label for="reg-email">E-Mail</label>
 <input type="email" id="reg-email" placeholder="E-Mail eingeben" required />
 
-
 <label for="reg-password">Passwort</label>
 <input type="password" id="reg-password" placeholder="Passwort erstellen" required />
 
 <label for="reg-password2">Passwort wiederholen</label>
 <input type="password" id="reg-password2" placeholder="Passwort wiederholen" required />
 
+<div id="checkbox-datenschutz">
+<input type="checkbox" name="datenschutz" id="datenschutz" required>
+<label for="datenschutz">Einwilligungserklärung zur Verarbeitung personenbezogener Daten</label>
+</div>
 <button type="submit">Registrieren</button>
 </form>
 
@@ -40,7 +43,6 @@ function switchToLogin() {
 
 <label for="login-password">Passwort</label>
 <input type="password" id="login-password" placeholder="Passwort eingeben" required />
-
 
 <button type="submit">Anmelden</button>
 
