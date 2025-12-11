@@ -31,12 +31,13 @@ label {
   color: #162631;
 }
 
-#registerForm label, #loginForm label {
-    align-self: self-start;
+#registerForm label,
+#loginForm label {
+  align-self: self-start;
 }
 
 input[type="email"],
-input[type="password"]{
+input[type="password"] {
   width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -54,9 +55,23 @@ textarea:focus {
   outline: none;
 }
 
+#registerForm label[for="datenschutz"] {
+  align-self: center;
+  margin-bottom: 0;
+}
+
+#checkbox-datenschutz {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  align-self: flex-start;
+}
+
 input[type="file"] {
   padding: 10px;
-    font-size: 0.95rem;
+  font-size: 0.95rem;
+  float: right;
 }
 
 textarea {
@@ -68,10 +83,8 @@ textarea {
   font-size: 0.95rem;
   width: 100%;
   max-width: 700px;
-  
-  
-  margin-bottom: 15px;
 
+  margin-bottom: 15px;
 }
 
 form {
@@ -87,6 +100,20 @@ form {
   padding: 50px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  margin: 12px auto;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  max-height: max-content;
+  background: #ffffff;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  margin: 12px auto;
 }
 
 main {
@@ -124,8 +151,9 @@ button:hover {
   background: #335770;
 }
 
-#loginForm button, #registerForm button {
-  width: 100%
+#loginForm button,
+#registerForm button {
+  width: 100%;
 }
 
 .link {
@@ -216,4 +244,10 @@ a:hover {
   max-width: 100%;
   border-radius: 4px;
   display: block;
+}
+
+#time {
+  font-size: 64px;
+  margin: 20px;
+  color: #162631;
 }

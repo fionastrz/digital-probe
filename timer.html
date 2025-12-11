@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Einfacher 2-Minuten-Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .timer-box {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 280px;
+    }
+
+    #time {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #1e4ecb;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-box">
+    <div id="time">02:00</div>
+    <button id="startBtn">Start</button>
+  </div>
+
+  <audio id="alarmSound" src="assets\sounds\new-notification-022-370046.mp3"></audio>
+
+  <script>
+    let timeLeft = 120; // 2 Minuten
+    let timerInterval;
+
+    const timeDisplay = document.getElementById("time");
+    const startBtn = document.getElementById("startBtn");
+    const alarmSound = document.getElementById("alarmSound");
+
+    function updateDisplay() {
+      const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+      const seconds = String(timeLeft % 60).padStart(2, "0");
+      timeDisplay.textContent = `${minutes}:${seconds}`;
+    }
+
+    startBtn.addEventListener("click", () => {
+      clearInterval(timerInterval);
+      timeLeft = 10;
+      updateDisplay();
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateDisplay();
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timeDisplay.textContent = "00:00";
+          alarmSound.play();
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
