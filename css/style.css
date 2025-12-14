@@ -18,7 +18,7 @@ h2 {
 }
 
 h3 {
-  margin: 0 10px 10px 0;
+  margin: 10px 0 10px 0;
   font-size: 1.2rem;
   color: #162631;
   text-align: center;
@@ -29,6 +29,14 @@ label {
   margin-bottom: 6px;
   font-size: 0.9rem;
   color: #162631;
+}
+
+p {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: #162631;
+  width: 650px;
 }
 
 #registerForm label,
@@ -110,7 +118,7 @@ form {
   width: 60%;
   max-height: max-content;
   background: #ffffff;
-  padding: 50px;
+  padding: 50px 150px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   margin: 12px auto;
