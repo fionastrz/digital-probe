@@ -49,9 +49,8 @@ document
     if (error) {
       alert("Fehler: " + error.message);
     } else {
-      document.getElementById("message").textContent =
-        "Antwort wurde gespeichert";
-      document.getElementById("feedbackForm").reset();
+      showToast("Antwort wurde gespeichert", "success")
+      document.getElementById("antwort-form").reset();
     }
   });
 
@@ -108,6 +107,7 @@ document.getElementById("upload-form").addEventListener("submit", async (e) => {
     return;
   }
   showToast("Erfolgreich gespeichert", "success");
+  location.reload()
 
   fileInput.value = "";
   commentField.value = "";
