@@ -153,6 +153,7 @@ button {
   cursor: pointer;
   margin-top: 5px;
   margin-bottom: 15px;
+  transition: background-color 0.3s;
 }
 
 button:hover {
@@ -259,3 +260,18 @@ a:hover {
   margin: 20px;
   color: #162631;
 }
+
+#countdown {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.timer-button {
+  padding: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 25px;
+    font-size:xx-large;
+    font-weight: bold;
+ 
+  }
