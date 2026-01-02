@@ -41,10 +41,10 @@ document
       data: { user },
     } = await supabaseClient.auth.getUser();
 
-    // Eingaben in Tabelle speichern (z. B. "feedback")
+    // Eingaben in Tabelle speichern
     const { data, error } = await supabaseClient
-      .from("nutzereingaben")
-      .insert([{ eingabe: antwort, user_id: user.id }]);
+      .from("user_entries")
+      .insert([{ user_id: user.id, task_type: "tagebuch", textarea_response: antwort,}]);
 
     if (error) {
       alert("Fehler: " + error.message);
