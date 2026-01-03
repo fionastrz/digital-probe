@@ -5,6 +5,16 @@ const supabaseKey =
 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+const questions = {
+  1: "Wenn du an Produktivität denkst: Was kommt dir als Erstes in den Sinn?",
+  2: "Tages-Frage 2?",
+  3: "Tages-Frage 3?",
+  4: "Tages-Frage 4?",
+  5: "Tages-Frage 5?",
+  6: "Tages-Frage 6?",
+  7: "Tages-Frage 7?"
+}
+
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   await supabaseClient.auth.signOut();
@@ -75,8 +85,7 @@ async function checkDay() {
             Fotos.
           </p>
           <h3>
-            Wenn du an Produktivität denkst: Was kommt dir als Erstes in den
-            Sinn?
+            ${questions[countDay]}
           </h3>
           <textarea
             id="antwort-feld"
