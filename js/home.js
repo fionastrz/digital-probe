@@ -4,22 +4,27 @@ const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhyc3dydnFhdnRrcWNydnBycnNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMTEyOTksImV4cCI6MjA4MDY4NzI5OX0.pTWsDXH8c4MQZE7KoJ1JEyOk0XY_FP5KdMOgzmdDftk";
 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+let currentUser = null;
 
-const questions = {
+const dailyBox = document.getElementById("daily-box");
+
+const daily_questions = {
   1: "Wenn du an Produktivität denkst: Was kommt dir als Erstes in den Sinn?",
   2: "Tages-Frage 2?",
   3: "Tages-Frage 3?",
   4: "Tages-Frage 4?",
   5: "Tages-Frage 5?",
   6: "Tages-Frage 6?",
-  7: "Tages-Frage 7?"
+  7: "Tages-Frage 7?",
+};
+
+async function logout() {
+  await supabaseClient.auth.signOut();
+  window.location.href = "index.html";
 }
 
 // Logout
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await supabaseClient.auth.signOut();
-  window.location.href = "index.html";
-});
+document.getElementById("logoutBtn").addEventListener("click", logout);
 
 function showToast(message, type) {
   const container = document.getElementById("toast-container");
@@ -37,226 +42,173 @@ function showToast(message, type) {
 }
 
 // Prüfen ob User eingeloggt ist
+
 async function checkUser() {
   const {
     data: { user },
   } = await supabaseClient.auth.getUser();
   if (!user) {
     window.location.href = "index.html"; // zurück zum Login
+    return;
   }
+  currentUser = user;
 }
-checkUser();
 
-// Neue Fragen erst am nächsten Tag freischalten
-async function checkDay() {
-  let answered_already = false
-  const {
-    data: { user },
-  } = await supabaseClient.auth.getUser();
+(async () => {
+  await checkUser();
+  await checkDay();
+  await loadUserImages();
+})();
 
-  const { data : diary_entry } = await supabaseClient
+async function getDiaryEntries() {
+  const { data, error } = await supabaseClient
     .from("user_entries")
-    .select("id")
-    .eq("task_type", "tagebuch");
-  const countDay = diary_entry.length + 1
-  
-  if (diary_entry.length != 0) {
-    const { data, error } = await supabaseClient
-      .from("user_entries")
-      .select("created_at")
-      .eq("user_id", user.id)
-      .eq("task_type", "tagebuch")
-      .order("created_at", { ascending: false })
-
-    const currentDay = new Date().getDate();
-    const createdAtDate = new Date(data[0].created_at);
-    answered_already = (currentDay == createdAtDate.getDate())? true : false
-  }
-
-    const dailyBox = document.getElementById("daily-box");
-    if (diary_entry == null || answered_already == false) {
-      dailyBox.innerHTML = `
-          <form id="antwort-form">
-          <h2>Tag ${countDay}</h2>
-          <p>
-            Hier findest du Fragen, die deine Gedanken und Vorstellungen von
-            Produktivität erkunden. Nimm dir die Zeit, die du brauchst (z. B.
-            eine Frage pro Tag) und ergänze deine Antworten gerne mit passenden
-            Fotos.
-          </p>
-          <h3>
-            ${questions[countDay]}
-          </h3>
-          <textarea
-            id="antwort-feld"
-            name="antwort-feld"
-            placeholder="Schreibe deine Gedanken auf ..."
-            maxlength="1000"
-            required
-          ></textarea>
-          <input type="file" id="upload-files" accept="image/*" />
-          <button type="submit">Absenden</button>
-        </form>`;
-      dailyUserEntry();
-    }  
-    else {
-            dailyBox.innerHTML = `
-    <h2>Du hast die täglichen Fragen für heute bereits ausgefüllt. Schaue morgen wieder vorbei!
-</h2>
-    `;
-  }
-}
-checkDay();
-
-// Formular absenden
-async function dailyUserEntry() {
-  document
-    .getElementById("antwort-form")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const antwort = document.getElementById("antwort-feld").value;
-      const fileInput = document.getElementById("upload-files");
-
-      const file = fileInput.files[0];
-      let fileName = null;
-
-      const {
-        data: { user },
-      } = await supabaseClient.auth.getUser();
-
-      if (file) {
-        fileName = `${user.id}/${Date.now()}-${file.name}`;
-
-        const { data, error } = await supabaseClient.storage
-          .from("images")
-          .upload(fileName, file);
-        if (error) {
-          console.log(error);
-          showToast("Upload fehlgeschlagen! ", "error");
-          return;
-        }
-      }
-
-      // Eingaben in Tabelle speichern
-      const { data, error } = await supabaseClient.from("user_entries").insert([
-        {
-          user_id: user.id,
-          task_type: "tagebuch",
-          textarea_response: antwort,
-          image_filename: fileName,
-        },
-      ]);
-
-      if (error) {
-        alert("Fehler: " + error.message);
-      } else {
-        showToast("Deine Antwort wurde gespeichert", "success");
-        const dailyBox = document.getElementById("daily-box");
-        dailyBox.replaceChildren();
-        const successtext = document.createElement("h2");
-        successtext.textContent =
-          "Danke fürs Ausfüllen. Schau morgen wieder vorbei";
-        dailyBox.appendChild(successtext);
-      }
-    });
-}
-
-// Upload von Bildern
-document.getElementById("upload-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const fileInput = document.getElementById("upload-file");
-  const commentField = document.getElementById("kommentar-feld");
-
-  const file = fileInput.files[0];
-  const comment = commentField.value.trim();
-
-  if (!file) {
-    showToast("Bitte wähle eine Datei aus!", "error");
-    return;
-  }
-
-  const user = (await supabaseClient.auth.getUser()).data.user;
-  // Eindeutiger Dateiname
-  const fileName = `${user.id}/${Date.now()}-${file.name}`;
-
-  const { data, error } = await supabaseClient.storage
-    .from("images")
-    .upload(fileName, file);
-
-  if (error) {
-    console.log(error);
-    showToast("Upload fehlgeschlagen! ", "error");
-    return;
-  }
-  ///else {
-  //showToast("Bild erfolgreich hochgeladen!", "success");
-
-  // Eingabefeld leeren
-  const { data: insertData, error: dbError } = await supabaseClient
-    .from("image_entries")
-    .insert({
-      file_name: fileName,
-      created_at: new Date(),
-      comment: comment,
-      user_id: user.id,
-    });
-
-  if (dbError) {
-    showToast("DB Error", "error");
-    console.log("DB-Fehler: " + dbError.message);
-    return;
-  }
-  showToast("Erfolgreich gespeichert", "success");
-  location.reload();
-
-  fileInput.value = "";
-  commentField.value = "";
-});
-
-// Aktuellen User holen
-async function loadUserImages() {
-  const user = (await supabaseClient.auth.getUser()).data.user;
-
-  const { data: entries, error } = await supabaseClient
-    .from("image_entries")
-    .select("*")
-    .eq("user_id", user.id)
+    .select()
+    .eq("user_id", currentUser.id)
+    .eq("task_type", "tagebuch")
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Fehler beim Laden der Einträge:", error);
-    return;
+    console.error(error);
+    return [];
   }
+
+  return data;
+}
+
+async function checkDay() {
+  const entries = await getDiaryEntries();
+
+  const dayCounter = entries.length + 1;
+  let isAlreadyAnswered = false;
 
   if (entries.length > 0) {
-    const title = document.getElementById("bild-hochladen");
-    title.textContent = "Hier kannst du deine Bilder ansehen";
+    const today = new Date().toDateString();
+    const lastEntryDate = new Date(entries[0].created_at).toDateString();
+
+    isAlreadyAnswered = today === lastEntryDate;
   }
 
-  const container = document.getElementById("images-container");
-  container.innerHTML = ""; // leeren
+  if (isAlreadyAnswered == false) {
+    showDailyTask(dayCounter);
+  } else {
+    dailyBox.innerHTML = `<h2>Du hast die täglichen Fragen für heute bereits ausgefüllt. Schaue morgen wieder vorbei!</h2>`;
+  }
 
-  for (const entry of entries) {
-    // Signed URL (30 Minuten gültig)
-    const { data: urlData, error: urlError } = await supabaseClient.storage
-      .from("images")
-      .createSignedUrl(entry.file_name, 60);
+  return { dayCounter, isAlreadyAnswered };
+}
 
-    const img = document.createElement("img");
-    img.src = urlData.signedUrl;
-    img.classList.add("uploaded-image");
+function showDailyTask(dayCounter) {
+  dailyBox.innerHTML = `
+    <form id="antwort-form">
+    <h2>Tag ${dayCounter}</h2>
+    <p>
+      Hier findest du Fragen, die deine Gedanken und Vorstellungen von
+      Produktivität erkunden. Nimm dir die Zeit, die du brauchst (z. B.
+      eine Frage pro Tag) und ergänze deine Antworten gerne mit passenden
+      Fotos.
+    </p>
+    <h3>
+      ${daily_questions[dayCounter]}
+    </h3>
+    <textarea
+      id="antwort-feld"
+      name="antwort-feld"
+      placeholder="Schreibe deine Gedanken auf ..."
+      maxlength="1000"
+      required
+    ></textarea>
+    <input type="file" id="upload-files" accept="image/*" />
+    <button type="submit">Absenden</button>
+  </form>`;
+  document
+    .getElementById("antwort-form")
+    .addEventListener("submit", submitEntry);
+}
 
-    const comment = document.createElement("p");
-    comment.textContent = entry.comment;
-
-    const card = document.createElement("div");
-    card.classList.add("image-card");
-
-    card.appendChild(img);
-    card.appendChild(comment);
-    container.appendChild(card);
+async function uploadFile(file, fileName) {
+  const { data, error } = await supabaseClient.storage
+    .from("images")
+    .upload(fileName, file);
+  if (error) {
+    showToast("Upload fehlgeschlagen! ", "error");
+    return;
   }
 }
 
-loadUserImages();
+// Formular absenden
+async function submitEntry(e) {
+  e.preventDefault();
+  const antwort = document.getElementById("antwort-feld").value;
+  const fileInput = document.getElementById("upload-files");
+
+  const file = fileInput.files[0];
+  let fileName = null;
+
+  if (file) {
+    fileName = `${currentUser.id}/${Date.now()}-${file.name}`;
+    uploadFile(file, fileName);
+  }
+
+  // Eingaben in Tabelle speichern
+  try {
+    await supabaseClient.from("user_entries").insert([
+      {
+        user_id: currentUser.id,
+        task_type: "tagebuch",
+        textarea_response: antwort,
+        image_filename: fileName,
+      },
+    ]);
+    showToast("Deine Antwort wurde gespeichert", "success");
+    const dailyBox = document.getElementById("daily-box");
+    dailyBox.replaceChildren();
+    const successtext = document.createElement("h2");
+    successtext.textContent =
+      "Danke fürs Ausfüllen. Schau morgen wieder vorbei";
+    dailyBox.appendChild(successtext);
+  } catch (error) {
+    alert("Fehler: " + error.message);
+  }
+}
+
+// Aktuellen User holen
+async function loadUserImages() {
+  const entries = await getDiaryEntries();
+  let counter = entries.length
+
+  if (entries.length > 0) {
+    const title = document.getElementById("bild-hochladen");
+    title.textContent = "Hier kannst du deine letzten Einträge ansehen";
+
+    const container = document.getElementById("images-container");
+    container.innerHTML = ""; // leeren
+
+    for (const entry of entries) {
+      
+      const card = document.createElement("div");
+      const header = document.createElement("h3")
+      header.textContent = `Tag ${counter}`
+
+      if (entry.image_filename != null) {
+        const { data: urlData, error: urlError } = await supabaseClient.storage
+          .from("images")
+          .createSignedUrl(entry.image_filename, 60);
+
+        const img = document.createElement("img");
+        img.src = urlData.signedUrl;
+        img.classList.add("uploaded-image");
+        card.appendChild(img);
+      }
+
+      const comment = document.createElement("p");
+      comment.textContent = entry.textarea_response;
+
+      card.classList.add("image-card");
+      card.appendChild(header)
+      card.appendChild(comment);
+      container.appendChild(card);
+      counter--;
+    }
+  }
+}
