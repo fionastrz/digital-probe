@@ -103,10 +103,10 @@ function showDailyTask(dayCounter) {
     <form id="antwort-form">
     <h2>Tag ${dayCounter}</h2>
     <p>
-      Hier findest du Fragen, die deine Gedanken und Vorstellungen von
-      Produktivität erkunden. Nimm dir die Zeit, die du brauchst (z. B.
-      eine Frage pro Tag) und ergänze deine Antworten gerne mit passenden
-      Fotos.
+      Hier kommen ein paar Fragen hin, die täglich auszufüllen sind, z. B. <br>
+      Hast du dir heute etwas vorgenommen und es auch umgesetzt? <br>
+      Diagramm ausfüllen, wie der Tag grob verbracht wurde <br>
+      und dann jeweils eine Tages-Frage oder ein Tages-Bild (oder zwei zur Auswahl)
     </p>
     <h3>
       ${daily_questions[dayCounter]}

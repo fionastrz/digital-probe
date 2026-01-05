@@ -64,7 +64,7 @@ function renderReflectionForm() {
   timerBox.innerHTML = `
         <h3 id="timer-header">Bewusst Innehalten</h3>
         <form id="timer-form">
-        <p id="timer-text">Wie erging es dir in den letzten ${Number(timer_data)} Minuten?</p>
+        <p id="timer-text">Wie waren die letzten ${Number(timer_data)} Minuten für dich?</p>
         <textarea 
           name="antwort-feld-timer" 
           id="antwort-feld-timer" 
@@ -100,7 +100,7 @@ async function handleFormSubmit(e) {
 
     showToast("Deine Antwort wurde gespeichert", "success");
     timerBox.innerHTML =
-      "<h2>Danke fürs Ausfüllen dieser Aufgabe. Du kannst sie beliebig oft wiederholen, indem du die Seite aktualisierst.</h2>";
+      "<h2>Danke für deine Antwort. Du kannst diesen Timer beliebig oft starten und verschiedene Zeiten ausprobieren.</h2>";
   } catch (error) {
     alert("Fehler: " + error.message);
   }
