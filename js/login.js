@@ -97,16 +97,17 @@ function attachLoginHandler() {
   const form = document.getElementById("loginForm");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+    const email = document.getElementById("login-email");
+    const password = document.getElementById("login-password");
 
     const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password,
+      email: email.value,
+      password: password.value,
     });
     if (error) {
+      email.style.borderColor = "red";
+      password.style.borderColor = "red";
       showToast(error.message, "error");
-      console.error("Login Error:", error.message);
     } else {
       console.log("User:", data.user);
       window.location.href = "home.html";
