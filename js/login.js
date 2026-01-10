@@ -30,8 +30,7 @@ function switchToRegister() {
 
 <p id="datenschutz-link" style="cursor:pointer;
 ">Einwilligungserklärung lesen</p>
-<div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-    background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+<div id="modal">
   <div style="background:#fff; padding:20px; max-width:800px; max-height:100vh; overflow:auto; border-radius:8px;">
     <h3>Einwilligungserklärung</h3>
 
@@ -46,9 +45,9 @@ Alle persönlichen Daten, die im Rahmen der digitalen Studie erhoben werden, wer
 <input type="checkbox" name="datenschutz" id="datenschutz" required>
 <label for="datenschutz" style="font-size: 1.2rem;">Ich habe die Einwilligungserklärung gelesen und stimme der Verarbeitung meiner Daten zu.
 </label>
-
-
 </div>
+
+
 <button type="submit">Registrieren</button>
 </form>
 
