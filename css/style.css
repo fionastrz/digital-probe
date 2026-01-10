@@ -12,7 +12,7 @@ body {
 
 h2 {
   margin: 0 0 20px 0;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #162631;
   text-align: center;
 }
@@ -34,9 +34,7 @@ label {
 p {
   display: block;
   margin-top: 6px;
-  font-size: 0.95rem;
   color: #162631;
-  width: 650px;
 }
 
 #registerForm label,
@@ -47,22 +45,30 @@ p {
 }
 
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+select {
   width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   margin-bottom: 15px;
-  font-size: 0.95rem;
+  font-size: 1.3rem;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  align-self: flex-start;
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   border-color: #426f8f;
   box-shadow: 0 0 6px rgba(66, 111, 143, 0.3);
   outline: none;
+}
+
+input[type="checkbox"] {
+  width: 40px;
+  height: 40px;
 }
 
 #registerForm label[for="datenschutz"] {
@@ -100,14 +106,18 @@ textarea {
 form {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+}
+
+#antwort-form {
   align-items: center;
 }
 
 .container {
-  width: 350px;
+  max-width: 450px;
   height: fit-content;
   background: #ffffff;
-  padding: 50px;
+  padding: 70px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   margin: 12px auto;
@@ -117,7 +127,8 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 40%;
+  max-width: 60%;
   max-height: max-content;
   background: #ffffff;
   padding: 50px 150px;
@@ -175,19 +186,23 @@ button:hover {
   font-size: 0.9rem;
 }
 
-a {
+a,
+#datenschutz-link {
   color: #335770;
   text-decoration: none;
+  font-size: 1.1rem;
 }
 
-a:hover {
+a:hover,
+#datenschutz-link:hover {
   text-decoration: underline;
 }
 
-.switch {
+.switch,
+.datenschutz-link {
   text-align: center;
   margin-top: 20px;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
 }
 
 #toast-container {
@@ -276,10 +291,9 @@ a:hover {
 }
 .timer-button {
   padding: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 25px;
-    font-size:xx-large;
-    font-weight: bold;
- 
-  }
+  width: 60px;
+  height: 60px;
+  border-radius: 25px;
+  font-size: xx-large;
+  font-weight: bold;
+}

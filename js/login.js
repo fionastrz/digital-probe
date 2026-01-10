@@ -18,9 +18,36 @@ function switchToRegister() {
 <label for="reg-password2">Passwort wiederholen</label>
 <input type="password" id="reg-password2" placeholder="Passwort wiederholen" required />
 
+<label for="ageSelect">Altersgruppe:</label>
+<select id="ageSelect" name="age" style="max-width: 50%" required>
+  <option value="">Bitte wählen</option>
+  <option value="18-25">18–25</option>
+  <option value="26-35">26–45</option>
+  <option value="46-55">46–65</option>
+  <option value="66+">66+</option>
+  <option value="kA">keine Angabe</option>
+</select>
+
+<p id="datenschutz-link" style="cursor:pointer;
+">Einwilligungserklärung lesen</p>
+<div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+    background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:20px; max-width:800px; max-height:100vh; overflow:auto; border-radius:8px;">
+    <h3>Einwilligungserklärung</h3>
+
+    <p style="font-size: large; line-height: 1.6; margin-top: 24px;">Durch deine Registrierung erklärst du dich im Rahmen einer Masterarbeit an der Universität Rostock mit der Speicherung und Auswertung deiner personenbezogenen Daten und Antworten auf die gestellten Fragen einverstanden.<br>
+Die Teilnahme an der Studie ist freiwillig und kann jederzeit beendet werden.<br>
+Alle persönlichen Daten, die im Rahmen der digitalen Studie erhoben werden, werden vertraulich behandelt und nicht an Dritte weitergegeben. Die Auswertung erfolgt anonymisiert, sodass keine Rückschlüsse auf einzelne Teilnehmer gezogen werden können.
+</p>
+    <button id="closeModal">Schließen</button>
+  </div>
+</div>
 <div id="checkbox-datenschutz">
 <input type="checkbox" name="datenschutz" id="datenschutz" required>
-<label for="datenschutz">Einwilligungserklärung zur Verarbeitung personenbezogener Daten</label>
+<label for="datenschutz" style="font-size: 1.2rem;">Ich habe die Einwilligungserklärung gelesen und stimme der Verarbeitung meiner Daten zu.
+</label>
+
+
 </div>
 <button type="submit">Registrieren</button>
 </form>
@@ -37,20 +64,19 @@ function switchToLogin() {
   container.innerHTML = `
 <h2>Login</h2>
 <form id="loginForm">
-<label for="login-email">E-Mail</label>
-<input type="email" id="login-email" placeholder="E-Mail eingeben" required />
+<label for="login-email">E-Mail-Adresse</label>
+<input type="email" id="login-email" placeholder="E-Mail-Adresse" required />
 
 
 <label for="login-password">Passwort</label>
-<input type="password" id="login-password" placeholder="Passwort eingeben" required />
+<input type="password" id="login-password" placeholder="Passwort" required />
 
 <button type="submit">Anmelden</button>
 
-
+</form>
 <div class="link">
 <a href="#reset" id="resetpw">Passwort vergessen?</a>
 </div>
-</form>
 <div class="switch">
 Du hast noch keinen Account? <a href="#" onclick="switchToRegister()">Jetzt registrieren</a>
 </div>
@@ -67,7 +93,12 @@ function attachRegisterHandler() {
     const email = document.getElementById("reg-email").value;
     const password = document.getElementById("reg-password");
     const password2 = document.getElementById("reg-password2");
+    const ageGroup = document.getElementById("ageSelect").value;
 
+    if (!ageGroup) {
+      showToast("Bitte wähle deine Altersgruppe aus.", "error");
+    return;
+  }
     if (password.value !== password2.value) {
       showToast("Die Passwörter stimmen nicht überein.", "error");
       password.style.borderColor = "red";
@@ -84,10 +115,33 @@ function attachRegisterHandler() {
       showToast("Fehler bei der Registrierung.", "error");
       console.error("Sign-Up Error:", error.message);
     } else {
+      
+      const { error: profileError } = await supabaseClient
+        .from('user_profiles')
+        .insert([
+          {
+            user_id: data.user.id,
+            email: email,
+            age_group: ageGroup
+          }
+        ]);
+
+      if(profileError){
+        console.error(profileError.message);
+      }
+
       showToast("Registrierung erfolgreich.", "success");
       switchToLogin();
     }
   });
+
+  const link = document.getElementById("datenschutz-link");
+  const modal = document.getElementById("modal");
+  const close = document.getElementById("closeModal");
+
+  link.addEventListener("click", () => modal.style.display = "flex");
+  close.addEventListener("click", () => modal.style.display = "none");
+
 }
 
 function attachLoginHandler() {
@@ -120,8 +174,8 @@ function showPasswordform() {
   container.innerHTML = `
 <h2>Passwort vergessen</h2>
 <form id="resetForm">
-<label for="reset-email">E-Mail</label>
-<input type="email" id="reset-email" placeholder="E-Mail eingeben" required />
+<label for="reset-email">E-Mail-Adresse:</label>
+<input type="email" id="reset-email" placeholder="E-Mail-Adresse" required />
 <button type="submit">Neues Passwort anfordern</button>
 
 <div class="link">
