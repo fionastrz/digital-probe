@@ -25,6 +25,15 @@ async function logout() {
 
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", logout);
+// Teilnahme beenden
+const modal = document.getElementById("modal");
+const close = document.getElementById("closeModal");
+
+document
+  .getElementById("teilnahmeBtn")
+  .addEventListener("click", () => (modal.style.display = "flex"));
+close.addEventListener("click", () => (modal.style.display = "none"));
+
 
 function showToast(message, type) {
   const container = document.getElementById("toast-container");
@@ -175,7 +184,7 @@ async function submitEntry(e) {
 // Aktuellen User holen
 async function loadUserImages() {
   const entries = await getDiaryEntries();
-  let counter = entries.length
+  let counter = entries.length;
 
   if (entries.length > 0) {
     const title = document.getElementById("bild-hochladen");
@@ -185,10 +194,9 @@ async function loadUserImages() {
     container.innerHTML = ""; // leeren
 
     for (const entry of entries) {
-      
       const card = document.createElement("div");
-      const header = document.createElement("h3")
-      header.textContent = `Tag ${counter}`
+      const header = document.createElement("h3");
+      header.textContent = `Tag ${counter}`;
 
       if (entry.image_filename != null) {
         const { data: urlData, error: urlError } = await supabaseClient.storage
@@ -205,7 +213,7 @@ async function loadUserImages() {
       comment.textContent = entry.textarea_response;
 
       card.classList.add("image-card");
-      card.appendChild(header)
+      card.appendChild(header);
       card.appendChild(comment);
       container.appendChild(card);
       counter--;

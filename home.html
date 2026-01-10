@@ -11,12 +11,58 @@
 
     <header class="header">
       <div><h1>Willkommen!</h1></div>
-      <button id="logoutBtn">Logout</button>
+      <div style="display: flex; flex-direction: row; gap: 20px">
+        <button id="teilnahmeBtn">Teilnahme beenden</button>
+        <button id="logoutBtn">Logout</button>
+      </div>
     </header>
 
     <main>
-      <div class="home-container" id="daily-box">
+      <div id="modal">
+        <div
+          style="
+            background: #fff;
+            padding: 20px;
+            max-width: 800px;
+            max-height: 100vh;
+            overflow: auto;
+            border-radius: 8px;
+          "
+        >
+          <h3>Vielen Dank für deine Teilnahme!</h3>
+
+          <p style="font-size: large; line-height: 1.6; margin-top: 24px">
+            Deine Teilnahme hilft mir sehr bei der Durchführung meiner
+            Masterarbeit. Ich hoffe, dass du durch die Fragen auch selbst
+            Anregungen zur Reflexion mitnehmen konntest. Wenn du Interesse hast,
+            informiere ich dich gerne in einigen Wochen per E-Mail über die
+            Ergebnisse der Auswertung. <br />
+            <br />
+            Mit einem Klick auf „Teilnahme beenden“ wird deine Teilnahme
+            endgültig abgeschlossen. Wenn du noch etwas ändern möchtest, klicke
+            bitte auf „Zurück“.
+          </p>
+          <div>
+            <div id="checkbox-datenschutz">
+              <input
+                type="checkbox"
+                name="benachrichtigung"
+                id="benachrichtigung"
+                required
+              />
+              <label for="benachrichtigung" style="font-size: 1.2rem"
+                >Ich möchte per E-Mail benachrichtigt werden.
+              </label>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+            <button id="closeModal" style="padding: 15px;">Zurück</button>
+            <button id="teilnahmeBtn" style="padding: 15px;">Teilnahme beenden</button>
+          </div>
+          </div>
+        </div>
       </div>
+
+      <div class="home-container" id="daily-box"></div>
 
       <div class="home-container" id="timer-box">
         <h3 id="timer-header">Bewusst Innehalten</h3>
@@ -28,9 +74,7 @@
         <div id="countdown">
           <button id="leftBtn" class="timer-button">&minus;</button>
           <div id="time">05:00</div>
-          <button id="rightBtn" class="timer-button">
-            &plus;
-          </button>
+          <button id="rightBtn" class="timer-button">&plus;</button>
         </div>
         <button id="startBtn">Starte den Timer</button>
       </div>
@@ -41,12 +85,15 @@
       <div class="home-container" id="musse-box">
         <h3 id="timer-header">Ungeteilte Aufmerksamkeit</h3>
         <p id="timer-text">
-          Wie oft bist du im Alltag wirklich bei einer Sache? 
-          Wähle eine Tätigkeit die du gerne ausführst, und widme ihr deine volle Aufmerksamkeit (ohne Druck und Erwartungen). 
-          Wenn möglich, reduziere Ablenkungen, zum Beispiel indem du Benachrichtigungen stummschaltest.
-          Im Anschluss kannst du deine Eindrücke festhalten.<br>
-          z. B. Fragen wie:<br>
-          Welche Tätigkeit hast du ausgeführt? Wie hast du es erlebt, zB angenehm, entspannend, langweilig, unruhig? Wie hast du dich im Nachhinein gefühlt? 
+          Wie oft bist du im Alltag wirklich bei einer Sache? Wähle eine
+          Tätigkeit die du gerne ausführst, und widme ihr deine volle
+          Aufmerksamkeit (ohne Druck und Erwartungen). Wenn möglich, reduziere
+          Ablenkungen, zum Beispiel indem du Benachrichtigungen stummschaltest.
+          Im Anschluss kannst du deine Eindrücke festhalten.<br />
+          z. B. Fragen wie:<br />
+          Welche Tätigkeit hast du ausgeführt? Wie hast du es erlebt, zB
+          angenehm, entspannend, langweilig, unruhig? Wie hast du dich im
+          Nachhinein gefühlt?
         </p>
         <button>Eindrücke notieren</button>
       </div>
@@ -55,8 +102,6 @@
         <h3 id="bild-hochladen"></h3>
         <div id="images-container"></div>
       </div>
-
-
     </main>
 
     <script src="js/home.js"></script>
