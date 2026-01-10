@@ -36,6 +36,7 @@ function updateDisplay(secondsLeft) {
 }
 
 function startTimer() {
+  document.getElementById("startBtn").disabled = true
   clearInterval(timerInterval);
   secondsLeft = timer_data*60;
   updateDisplay(secondsLeft);
