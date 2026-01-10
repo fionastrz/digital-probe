@@ -105,7 +105,7 @@ form {
 
 .container {
   width: 350px;
-  max-height: max-content;
+  height: fit-content;
   background: #ffffff;
   padding: 50px;
   border-radius: 12px;
