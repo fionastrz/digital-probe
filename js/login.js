@@ -142,9 +142,17 @@ async function sendPwLink(e) {
   });
 
   if (error) {
-    showToast(error.message, "error");
+    showToast("Es ist ein Fehler aufgetreten", "error");
   } else {
-    showToast("E-Mail zum Zurücksetzen wurde versendet.", "success");
+    const container = document.getElementById("form-container");
+    container.innerHTML = `
+            <h2>Bitte prüfe dein E-Mail-Postfach.
+            Dort findest du einen Link, mit dem du dein Passwort zurücksetzen kannst.
+            </h2>
+            <button onclick="window.location.href = 'index.html';">
+            Zurück zum Login
+            </button>
+            `;
   }
 }
 
