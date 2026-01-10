@@ -40,7 +40,9 @@ p {
 }
 
 #registerForm label,
-#loginForm label {
+#loginForm label,
+#resetForm label,
+#updateForm label {
   align-self: self-start;
 }
 
@@ -161,7 +163,9 @@ button:hover {
 }
 
 #loginForm button,
-#registerForm button {
+#registerForm button,
+#resetForm button,
+#updateForm button {
   width: 100%;
 }
 

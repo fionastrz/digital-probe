@@ -48,7 +48,7 @@ function switchToLogin() {
 
 
 <div class="link">
-<a href="#">Passwort vergessen?</a>
+<a href="#reset" id="resetpw">Passwort vergessen?</a>
 </div>
 </form>
 <div class="switch">
@@ -91,8 +91,10 @@ function attachRegisterHandler() {
 }
 
 function attachLoginHandler() {
-  const form = document.getElementById("loginForm");
+  const resetpw = document.getElementById("resetpw");
+  resetpw.addEventListener("click", showPasswordform);
 
+  const form = document.getElementById("loginForm");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("login-email").value;
@@ -110,6 +112,40 @@ function attachLoginHandler() {
       window.location.href = "home.html";
     }
   });
+}
+
+function showPasswordform() {
+  const container = document.getElementById("form-container");
+  container.innerHTML = `
+<h2>Passwort vergessen</h2>
+<form id="resetForm">
+<label for="reset-email">E-Mail</label>
+<input type="email" id="reset-email" placeholder="E-Mail eingeben" required />
+<button type="submit">Neues Passwort anfordern</button>
+
+<div class="link">
+<a href="#login" onclick="switchToLogin()">Zurück zum Login</a></div>
+</form>
+`;
+  const form = document.getElementById("resetForm");
+  form.addEventListener("submit", sendPwLink);
+}
+
+async function sendPwLink(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("reset-email").value;
+
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo:
+      "https://fionastrz.github.io/digital-probe/update-password.html",
+  });
+
+  if (error) {
+    showToast(error.message, "error");
+  } else {
+    showToast("E-Mail zum Zurücksetzen wurde versendet.", "success");
+  }
 }
 
 function showToast(message, type) {
