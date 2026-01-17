@@ -17,6 +17,11 @@ h2 {
   text-align: center;
 }
 
+h2.tasks-header {
+  font-size: 1.8rem;
+  margin: 0 0 30px 0;
+}
+
 h3 {
   margin: 10px 0 10px 0;
   font-size: 1.2rem;
@@ -35,6 +40,10 @@ p {
   display: block;
   margin-top: 6px;
   color: #162631;
+}
+
+p.tasks-text {
+  font-size: 1.2rem;
 }
 
 #registerForm label,
@@ -92,15 +101,13 @@ input[type="file"] {
 }
 
 textarea {
-  min-height: 100px;
+  min-height: 5vw;
   resize: vertical;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 0.95rem;
-  width: 100%;
-  max-width: 700px;
-
+  width: 90%;
   margin-bottom: 15px;
 }
 
@@ -112,6 +119,12 @@ form {
 
 #antwort-form {
   align-items: center;
+}
+
+#tasks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .container {
@@ -128,25 +141,36 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40%;
-  max-width: 60%;
+  justify-content: center;
   max-height: max-content;
   background: #ffffff;
-  padding: 50px 150px;
+  padding: 3vw;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-  margin: 12px auto;
+  margin: 12px 12px auto;
+}
+
+#timemusse {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+}
+
+#daily-box {
+  width: 50%;
+  min-height: 80vh;
 }
 
 main {
-  min-width: 70%;
+  width: 80%;
 }
 
 header {
   position: fixed;
   top: 0;
   left: 0px;
-  width: 100%;
+  width: 100vw;
   background-color: #162631;
   color: #fff;
   padding: 10px 20px;
@@ -172,6 +196,11 @@ button {
 
 button:hover {
   background: #335770;
+}
+
+.task-button {
+  padding: 15px;
+  font-size: 1.2rem;
 }
 
 #teilnahmeBtn {
@@ -289,7 +318,7 @@ a:hover,
 }
 
 #time {
-  font-size: 64px;
+  font-size: 3vw;
   margin: 20px;
   color: #162631;
 }

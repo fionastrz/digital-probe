@@ -9,13 +9,11 @@ let currentUser = null;
 const dailyBox = document.getElementById("daily-box");
 
 const daily_questions = {
-  1: "Wenn du an Produktivität denkst: Was kommt dir als Erstes in den Sinn?",
-  2: "Tages-Frage 2?",
-  3: "Tages-Frage 3?",
-  4: "Tages-Frage 4?",
-  5: "Tages-Frage 5?",
-  6: "Tages-Frage 6?",
-  7: "Tages-Frage 7?",
+  1: "Wie organisierst du deinen Alltag? Nutzt du dafür analoge oder digitale Hilfsmittel, zum Beispiel Kalender, To-do-Listen oder Handy-Apps? ",
+  2: "Wann fühlt sich ein Tag für dich „produktiv“ an? Denkst du, deine Sichtweise unterscheidet sich von der von anderen? Wenn ja, inwiefern",
+  3: "Bitte lies dir den folgenden Textausschnitt durch. Es handelt sich dabei um einen Auszug aus einem Ratgeber für Studierende, der dabei helfen soll, eine Lebensvision zu entwickeln. Notiere spontan, welche Gedanken oder Gefühle dabei in dir auftauchen.",
+  4: "Bitte sieh dir die beiden abgebildeten Kalender an. Welcher spricht dich eher an? Welche Annahmen verbindest du mit Personen, die ihren Kalender in der jeweiligen Form nutzen?",
+  5: " Haben die Fragen und Aufgaben der vergangenen Tage etwas in dir verändert? Ist dir zum Beispiel etwas aufgefallen, was vorher keine Rolle gespielt hat?",
 };
 
 async function logout() {
@@ -109,15 +107,25 @@ async function checkDay() {
 
 function showDailyTask(dayCounter) {
   dailyBox.innerHTML = `
+    <h2 class="tasks-header">Tag ${dayCounter}</h2>
+    <p  class="tasks-text">
+      ...
+    </p>    
     <form id="antwort-form">
-    <h2>Tag ${dayCounter}</h2>
-    <p>
-      Hier kommen ein paar Fragen hin, die täglich auszufüllen sind, z. B. <br>
-      Hast du dir heute etwas vorgenommen und es auch umgesetzt? <br>
-      Diagramm ausfüllen, wie der Tag grob verbracht wurde <br>
-      und dann jeweils eine Tages-Frage oder ein Tages-Bild (oder zwei zur Auswahl)
-    </p>
-    <h3>
+
+      <h3 id="dailyquestion">
+      Was ist dir an dem heutigen Tag besonders in Erinnerung geblieben?
+    </h3>
+    <textarea
+      id="daily-feld"
+      name="daily-feld"
+      placeholder="Schreibe deine Gedanken auf ..."
+      maxlength="1000"
+      required
+    ></textarea>
+    <input type="file" id="upload-files" accept="image/*" />
+
+    <h3 id="dailyquestion">
       ${daily_questions[dayCounter]}
     </h3>
     <textarea
@@ -127,8 +135,7 @@ function showDailyTask(dayCounter) {
       maxlength="1000"
       required
     ></textarea>
-    <input type="file" id="upload-files" accept="image/*" />
-    <button type="submit">Absenden</button>
+    <button class="task-button" type="submit">Absenden</button>
   </form>`;
   document
     .getElementById("antwort-form")

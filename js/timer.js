@@ -63,16 +63,16 @@ function finishTimer() {
 
 function renderReflectionForm() {
   timerBox.innerHTML = `
-        <h3 id="timer-header">Bewusst Innehalten</h3>
+        <h2 class="tasks-header">Bewusst Innehalten</h2>
         <form id="timer-form">
-        <p id="timer-text">Wie waren die letzten ${Number(timer_data)} Minuten für dich?</p>
+        <p class="tasks-text">Wie waren die letzten ${Number(timer_data)} Minuten für dich?</p>
         <textarea 
           name="antwort-feld-timer" 
           id="antwort-feld-timer" 
           maxlength="1000" 
           placeholder="Schreibe deine Gedanken auf ..." 
           required></textarea>
-        <button type="submit">Absenden</button>
+        <button class="task-button" type="submit">Absenden</button>
         </form>
         `;
 
