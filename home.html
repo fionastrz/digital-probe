@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <title>Startseite</title>
@@ -54,52 +54,54 @@
                 >Ich möchte per E-Mail benachrichtigt werden.
               </label>
             </div>
-            <div style="text-align: center; margin-top: 20px;">
-            <button id="closeModal" style="padding: 15px;">Zurück</button>
-            <button id="teilnahmeBtn" style="padding: 15px;">Teilnahme beenden</button>
-          </div>
+            <div style="text-align: center; margin-top: 20px">
+              <button id="closeModal" style="padding: 15px">Zurück</button>
+              <button id="teilnahmeBtn" style="padding: 15px">
+                Teilnahme beenden
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
       <div id="tasks">
-      <div class="home-container" id="daily-box"></div>
-      <div id="timemusse">
-      <div class="home-container" id="timer-box">
-        <h2 class="tasks-header">Bewusst Innehalten</h2>
-        <p class="tasks-text">
-          Starte den Timer und versuche, zwei Minuten lang bewusst nichts zu
-          tun. Wenn die Zeit abgelaufen ist, hörst du einen Ton und kannst
-          anschließend kurz festhalten, wie du diese Pause erlebt hast.
-        </p>
-        <div id="countdown">
-          <button id="leftBtn" class="timer-button">&minus;</button>
-          <div id="time">05:00</div>
-          <button id="rightBtn" class="timer-button">&plus;</button>
+        
+          <div class="home-container" id="daily-box"></div>
+        
+        <div id="timemusse">
+          <div class="home-container" id="timer-box">
+            <h2 class="tasks-header">Bewusst Innehalten</h2>
+            <p class="tasks-text">
+              Starte den Timer und versuche, zwei Minuten lang bewusst nichts zu
+              tun. Wenn die Zeit abgelaufen ist, hörst du einen Ton und kannst
+              anschließend kurz festhalten, wie du diese Pause erlebt hast.
+            </p>
+            <div id="countdown">
+              <button id="leftBtn" class="timer-button">&minus;</button>
+              <div id="time">05:00</div>
+              <button id="rightBtn" class="timer-button">&plus;</button>
+            </div>
+            <button class="task-button" id="startBtn">Starte den Timer</button>
+          </div>
+          <audio
+            id="alarmSound"
+            src="assets\sounds\new-notification-018-363746.mp3"
+          ></audio>
+
+          <div class="home-container" id="musse-box">
+            <h2 class="tasks-header">Entdecken der Muße</h2>
+            <p class="tasks-text">
+              Wie oft bist du im Alltag wirklich bei einer Sache? Wähle eine
+              Tätigkeit die du gerne ausführst, und widme ihr deine volle
+              Aufmerksamkeit (ohne Druck und Erwartungen). Wenn möglich,
+              reduziere Ablenkungen, zum Beispiel indem du Benachrichtigungen
+              stummschaltest. Im Anschluss kannst du deine Eindrücke
+              festhalten.<br />
+            </p>
+            <button class="task-button">Eindrücke notieren</button>
+          </div>
         </div>
-        <button class="task-button" id="startBtn">Starte den Timer</button>
       </div>
-      <audio
-        id="alarmSound"
-        src="assets\sounds\new-notification-018-363746.mp3"
-      ></audio>
-
-
-      <div class="home-container" id="musse-box">
-        <h2 class="tasks-header">Entdecken der Muße</h2>
-        <p class="tasks-text">
-          Wie oft bist du im Alltag wirklich bei einer Sache? Wähle eine
-          Tätigkeit die du gerne ausführst, und widme ihr deine volle
-          Aufmerksamkeit (ohne Druck und Erwartungen). Wenn möglich, reduziere
-          Ablenkungen, zum Beispiel indem du Benachrichtigungen stummschaltest.
-          Im Anschluss kannst du deine Eindrücke festhalten.<br />
-          z. B. Fragen wie:<br />
-          Welche Tätigkeit hast du ausgeführt? Wie hast du es erlebt, zB
-          angenehm, entspannend, langweilig, unruhig? Wie hast du dich im
-          Nachhinein gefühlt?
-        </p>
-        <button class="task-button">Eindrücke notieren</button>
-      </div></div>
-    </div>
       <div id="dailies">
         <h3 id="bild-hochladen"></h3>
         <div id="images-container"></div>
