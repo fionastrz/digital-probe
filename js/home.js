@@ -14,7 +14,7 @@ const daily_questions = {
     img: null,
   },
   2: {
-    text: "Wann fühlt sich ein Tag für dich „produktiv“ an? Denkst du, deine Sichtweise unterscheidet sich von der von anderen? Wenn ja, inwiefern",
+    text: "Wann fühlt sich ein Tag für dich „produktiv“ an? Denkst du, deine Sichtweise unterscheidet sich von der von anderen? Wenn ja, inwiefern?",
     img: null,
   },
   3: {
@@ -36,7 +36,7 @@ const short_questions = {
   2: "Wann fühlt sich ein Tag für dich „produktiv“ an?",
   3: "Was denkst du über den Artikel zur Entwicklung der Lebensvision?",
   4: "Welcher Kalender spricht dich eher an?",
-  5: " Haben die Fragen und Aufgaben der vergangenen Tage etwas in dir verändert?",
+  5: "Haben die Fragen und Aufgaben der vergangenen Tage etwas in dir verändert?",
 };
 
 let dayCounter = 0;
@@ -123,7 +123,7 @@ async function checkDay() {
   if (isAlreadyAnswered == false) {
     showDailyTask(dayCounter);
   } else {
-    dailyBox.innerHTML = `<h2>Du hast die täglichen Fragen für heute bereits ausgefüllt. Schaue morgen wieder vorbei!</h2>`;
+    dailyBox.innerHTML = `<h2 class="placeholder">Du hast die täglichen Fragen für heute bereits ausgefüllt. Schaue morgen wieder vorbei!</h2>`;
   }
 
   return { dayCounter, isAlreadyAnswered };
@@ -132,9 +132,6 @@ async function checkDay() {
 function showDailyTask(dayCounter) {
   dailyBox.innerHTML = `
     <h2 class="tasks-header">Tag ${dayCounter}</h2>
-    <p  class="tasks-text">
-      ...
-    </p>    
     <form id="antwort-form">
 
       <h3 id="dailyquestion">
@@ -272,7 +269,6 @@ async function loadUserImages() {
 
       card.appendChild(comment);
       card.appendChild(question_header);
-
       card.appendChild(response)
       card.style.minWidth = "30%";
       card.style.background = "#ffffff";
