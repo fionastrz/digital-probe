@@ -72,6 +72,11 @@ async function handleMusseFormSubmit(e) {
     ]);
 
     showToast("Deine Antwort wurde gespeichert", "success");
+    const modal = document.getElementById("modal-figal")
+    modal.style.display = "flex"
+    document.getElementById("closeModal-figal").addEventListener("click", () => (modal.style.display = "none"));
+
+
     musseBox.innerHTML =
       `<h2 class="placeholder">Vielen Dank für deine Antwort. </h2>
         <button id="cancelBtn" class="stop-button">Zurück zur Aufgabe</button>

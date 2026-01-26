@@ -48,14 +48,36 @@ async function logout() {
 
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", logout);
-// Teilnahme beenden
-const modal = document.getElementById("modal");
-const close = document.getElementById("closeModal");
 
-document
-  .getElementById("teilnahmeBtn")
-  .addEventListener("click", () => (modal.style.display = "flex"));
-close.addEventListener("click", () => (modal.style.display = "none"));
+// Teilnahme beenden
+async function teilnahmeBeenden() {
+  const modal = document.getElementById("modal-teilnahme");
+  const close = document.getElementById("closeModal-teilnahme");
+
+  document
+    .getElementById("teilnahmeBtn")
+    .addEventListener("click", () => (modal.style.display = "flex"));
+  close.addEventListener("click", () => (modal.style.display = "none"));
+
+  const checkboxBenachrichigung = document.getElementById("benachrichtigung");
+  document
+    .getElementById("teilnahmeBeendenBtn")
+    .addEventListener("click", async () => {
+      await supabaseClient
+        .from("user_profiles")
+        .update({ participation_ended: true })
+        .eq("user_id", currentUser.id);
+
+      if (checkboxBenachrichigung.checked) {
+        await supabaseClient
+          .from("user_profiles")
+          .update({ is_interested: true, participation_ended: true })
+          .eq("user_id", currentUser.id);
+      }
+      modal.style.display = "none";
+      window.location.reload();
+    });
+}
 
 function showToast(message, type) {
   const container = document.getElementById("toast-container");
@@ -87,6 +109,9 @@ async function checkUser() {
 
 (async () => {
   await checkUser();
+  await checkWillkommenstext();
+  await teilnahmeBeenden();
+  await checkTeilnahme();
   await checkDay();
   await loadUserImages();
 })();
@@ -105,6 +130,57 @@ async function getDiaryEntries() {
   }
 
   return data;
+}
+
+async function checkTeilnahme() {
+  const { data, error } = await supabaseClient
+    .from("user_profiles")
+    .select("participation_ended")
+    .eq("user_id", currentUser.id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (data.participation_ended == false) {
+    return;
+  } else {
+    const tasksContainer = document.getElementById("tasks");
+    tasksContainer.replaceChildren();
+    document.getElementById("teilnahmeBtn").remove();
+  }
+}
+
+async function checkWillkommenstext() {
+  const modalwillkommen = document.getElementById("modal-willkommen");
+  const closeBtn = document.getElementById("closeModal-willkommen");
+  const checkboxWillkommen = document.getElementById("willkommensnachricht");
+  const { data, error } = await supabaseClient
+    .from("user_profiles")
+    .select("show_welcometext")
+    .eq("user_id", currentUser.id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (data.show_welcometext == true) {
+    modalwillkommen.style.display = "flex";
+    closeBtn.addEventListener("click", async () => {
+      modalwillkommen.style.display = "none";
+
+      if (checkboxWillkommen.checked) {
+        await supabaseClient
+          .from("user_profiles")
+          .update({ show_welcometext: false })
+          .eq("user_id", currentUser.id);
+      }
+    });
+  }
 }
 
 async function checkDay() {
@@ -130,6 +206,13 @@ async function checkDay() {
 }
 
 function showDailyTask(dayCounter) {
+  if (dayCounter >= 6) {
+    const dailyBox = document.getElementById("daily-box");
+    dailyBox.replaceChildren();
+    const successtext = document.createElement("h2");
+    successtext.textContent = `Du hast alle fünf Tagesfragen beantwortet. Danke, dass du dir die Zeit genommen hast.`;
+    dailyBox.appendChild(successtext);
+  }
   dailyBox.innerHTML = `
     <h2 class="tasks-header">Tag ${dayCounter}</h2>
     <form id="antwort-form">
@@ -167,11 +250,12 @@ function showDailyTask(dayCounter) {
   document
     .getElementById("antwort-form")
     .addEventListener("submit", submitEntry);
-  
-  if(daily_questions[dayCounter].img !== null){
+
+  if (daily_questions[dayCounter].img !== null) {
     const imgEl = document.getElementById("dailyquestion-img");
-    console.log(imgEl)
-    imgEl.addEventListener("click", () => showImage(imgEl))}
+    console.log(imgEl);
+    imgEl.addEventListener("click", () => showImage(imgEl));
+  }
 }
 
 async function uploadFile(file, fileName) {
@@ -187,9 +271,9 @@ async function uploadFile(file, fileName) {
 // Formular absenden
 async function submitEntry(e) {
   e.preventDefault();
-  console.log(dayCounter)
+  console.log(dayCounter);
   const diary_antwort = document.getElementById("daily-feld").value;
-  const antwort = document.getElementById("antwort-feld").value
+  const antwort = document.getElementById("antwort-feld").value;
   const fileInput = document.getElementById("upload-files");
 
   const file = fileInput.files[0];
@@ -216,12 +300,7 @@ async function submitEntry(e) {
       },
     ]);
     showToast("Deine Antwort wurde gespeichert", "success");
-    const dailyBox = document.getElementById("daily-box");
-    dailyBox.replaceChildren();
-    const successtext = document.createElement("h2");
-    successtext.textContent =
-      "Du hast die täglichen Fragen für heute bereits ausgefüllt. Schaue morgen wieder vorbei!";
-    dailyBox.appendChild(successtext);
+    window.location.reload();
   } catch (error) {
     alert("Fehler: " + error.message);
   }
@@ -248,38 +327,36 @@ async function loadUserImages() {
         card.appendChild(img);
       }
       */
-      let questionantwort = undefined
+      let questionantwort = undefined;
 
       const { data: antwort } = await supabaseClient
         .from("user_entries")
         .select()
         .eq("user_id", currentUser.id)
-        .eq("task_type", `tag${counter}`)
-        ;
+        .eq("task_type", `tag${counter}`);
+      antwort.length > 0
+        ? (questionantwort = antwort[0].textarea_response)
+        : (questionantwort = "");
 
-      antwort.length > 0? questionantwort = antwort[0].textarea_response: questionantwort=""
-  
       const comment = document.createElement("p");
       comment.textContent = entry.textarea_response;
-      
+
       const question_header = document.createElement("h3");
       question_header.textContent = `${short_questions[counter]}`;
       const response = document.createElement("p");
-      response.textContent = questionantwort
+      response.textContent = questionantwort;
 
       card.appendChild(comment);
       card.appendChild(question_header);
-      card.appendChild(response)
+      card.appendChild(response);
       card.style.minWidth = "30%";
       card.style.background = "#ffffff";
       counter++;
     }
-
   }
 }
 
-function showImage(imgEl)
- {
+function showImage(imgEl) {
   if (!imgEl.src) return;
 
   const overlay = document.createElement("div");
@@ -295,5 +372,4 @@ function showImage(imgEl)
   overlay.addEventListener("click", () => {
     overlay.remove();
   });
-};
-
+}

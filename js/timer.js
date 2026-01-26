@@ -83,7 +83,8 @@ function decrement() {
 }
 
 function startTimer() {
-  secondsLeft = timerMinutes * 60;
+  durationMs = timerMinutes * 60 * 1000;
+  timerEndTime = Date.now() + durationMs
   disableAllButtons();
 
   timerBox.innerHTML = `
@@ -94,7 +95,7 @@ function startTimer() {
 
   document.getElementById("stopBtn").addEventListener("click", stopTimer);
 
-  timerInterval = setInterval(handleTimerTick, 1000);
+  timerInterval = setInterval(checkTimer, 1000);
 }
 
 function handleTimerTick() {
@@ -104,6 +105,15 @@ function handleTimerTick() {
     finishTimer();
   }
 }
+
+function checkTimer() {
+  const remaining = timerEndTime - Date.now();
+
+  if (remaining <= 0) {
+    finishTimer();
+  }
+}
+
 
 function stopTimer() {
   clearInterval(timerInterval);

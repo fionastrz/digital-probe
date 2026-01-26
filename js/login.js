@@ -7,6 +7,17 @@ const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 function switchToRegister() {
   const container = document.getElementById("form-container");
   container.innerHTML = `
+  <div class="modal" id="modal-datenschutz">
+  <div style="background:#fff; padding:20px; max-width:800px; max-height:100vh; overflow:auto; border-radius:8px;">
+    <h3>Einwilligungserklärung</h3>
+
+    <p style="font-size: large; line-height: 1.6; margin-top: 24px;">Durch deine Registrierung erklärst du dich im Rahmen einer Masterarbeit an der Universität Rostock mit der Speicherung und Auswertung deiner personenbezogenen Daten und Antworten auf die gestellten Fragen einverstanden.<br>
+Die Teilnahme an der Studie ist freiwillig und kann jederzeit beendet werden.<br>
+Alle persönlichen Daten, die im Rahmen der digitalen Studie erhoben werden, werden vertraulich behandelt und nicht an Dritte weitergegeben. Die Auswertung erfolgt anonymisiert, sodass keine Rückschlüsse auf einzelne Teilnehmer gezogen werden können.
+</p>
+    <button class="closeModal" id="closeModal-datenschutz">Schließen</button>
+  </div>
+</div>
 <h2>Registrierung</h2>
 <form id="registerForm">
 <label for="reg-email">E-Mail</label>
@@ -30,17 +41,6 @@ function switchToRegister() {
 
 <p id="datenschutz-link" style="cursor:pointer;
 ">Einwilligungserklärung lesen</p>
-<div id="modal">
-  <div style="background:#fff; padding:20px; max-width:800px; max-height:100vh; overflow:auto; border-radius:8px;">
-    <h3>Einwilligungserklärung</h3>
-
-    <p style="font-size: large; line-height: 1.6; margin-top: 24px;">Durch deine Registrierung erklärst du dich im Rahmen einer Masterarbeit an der Universität Rostock mit der Speicherung und Auswertung deiner personenbezogenen Daten und Antworten auf die gestellten Fragen einverstanden.<br>
-Die Teilnahme an der Studie ist freiwillig und kann jederzeit beendet werden.<br>
-Alle persönlichen Daten, die im Rahmen der digitalen Studie erhoben werden, werden vertraulich behandelt und nicht an Dritte weitergegeben. Die Auswertung erfolgt anonymisiert, sodass keine Rückschlüsse auf einzelne Teilnehmer gezogen werden können.
-</p>
-    <button id="closeModal">Schließen</button>
-  </div>
-</div>
 <div id="checkbox-datenschutz">
 <input type="checkbox" name="datenschutz" id="datenschutz" required>
 <label for="datenschutz" style="font-size: 1.2rem;">Ich habe die Einwilligungserklärung gelesen und stimme der Verarbeitung meiner Daten zu.
@@ -135,8 +135,8 @@ function attachRegisterHandler() {
   });
 
   const link = document.getElementById("datenschutz-link");
-  const modal = document.getElementById("modal");
-  const close = document.getElementById("closeModal");
+  const modal = document.getElementById("modal-datenschutz");
+  const close = document.getElementById("closeModal-datenschutz");
 
   link.addEventListener("click", () => modal.style.display = "flex");
   close.addEventListener("click", () => modal.style.display = "none");
