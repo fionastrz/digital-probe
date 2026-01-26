@@ -111,6 +111,22 @@ button:hover {
   font-size: clamp(14px, 1.2vw, 20px);
   max-width: 50%;
 }
+input[type=file] {
+  align-self: center;
+}
+
+input[type=file]::file-selector-button {
+  width: fit-content;
+  background: #426f8f;
+  color: #fff;
+  font-size: clamp(12px, 0.9vw, 16px);
+  padding: clamp(8px, 1vw, 16px) clamp(16px, 2vw, 32px);
+  border-radius: clamp(6px, 1vw, 12px);
+  border: none;
+  cursor: pointer;
+  margin-bottom: 5px;
+  transition: background-color 0.3s;
+}
 
 .teilnahmeBtn {
   background: #852626;

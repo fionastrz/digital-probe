@@ -228,8 +228,10 @@ function showDailyTask(dayCounter) {
       maxlength="1000"
       required
     ></textarea>
-    <input type="file" id="upload-files" accept="image/*" />
-
+    <div style="display: flex; flex-direction: column;">
+    <p style="margin:0 auto">Gerne kannst du deinen heutigen Eintrag auch durch Fotos ergänzen:</p>
+    <input type="file" id="upload-files" multiple accept="image/*" />
+    </div>
     <h3 id="dailyquestion">
       ${daily_questions[dayCounter].text}
     </h3>
@@ -259,30 +261,39 @@ function showDailyTask(dayCounter) {
 }
 
 async function uploadFile(file, fileName) {
-  const { data, error } = await supabaseClient.storage
+  const { error } = await supabaseClient.storage
     .from("images")
     .upload(fileName, file);
   if (error) {
-    showToast("Upload fehlgeschlagen! ", "error");
-    return;
+    console.log(error)
+    throw error;
   }
 }
 
 // Formular absenden
 async function submitEntry(e) {
   e.preventDefault();
-  console.log(dayCounter);
+ 
   const diary_antwort = document.getElementById("daily-feld").value;
   const antwort = document.getElementById("antwort-feld").value;
   const fileInput = document.getElementById("upload-files");
 
-  const file = fileInput.files[0];
-  let fileName = null;
+  const files = fileInput.files;
+  const uploadedFileNames = [];
 
-  if (file) {
-    fileName = `${currentUser.id}/${Date.now()}-${file.name}`;
-    uploadFile(file, fileName);
+  if (files.length > 0) {
+    const uploadPromises = Array.from(files).map(file => {
+      const fileName = `${currentUser.id}/${Date.now()}-${crypto.randomUUID()}-${file.name}`;
+      uploadedFileNames.push(fileName);
+      return uploadFile(file, fileName);
+    });
+
+    await Promise.all(uploadPromises);
+    console.log(uploadedFileNames);
+
   }
+
+
 
   // Eingaben in Tabelle speichern
   try {
@@ -291,7 +302,7 @@ async function submitEntry(e) {
         user_id: currentUser.id,
         task_type: "tagebuch",
         textarea_response: diary_antwort,
-        image_filename: fileName,
+        image_filename: uploadedFileNames,
       },
       {
         user_id: currentUser.id,
