@@ -6,14 +6,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="css/style.css" />
   </head>
+  <script src="js/lang.js"></script>
+
   <body>
     <div id="toast-container"></div>
 
     <header class="header">
       <div><h1>Digitales Probe Kit</h1></div>
       <div style="display: flex; flex-direction: row; gap: 20px">
-        <button class="teilnahmeBtn" id="teilnahmeBtn">Teilnahme beenden</button>
+        <button class="teilnahmeBtn" id="teilnahmeBtn">
+          Teilnahme beenden
+        </button>
         <button id="logoutBtn">Logout</button>
+         <div class="lang-switch" id="lang-switch-header">
+          <img src="assets/img/de.png" alt="Deutsch" onclick="setLang('de')" />
+          <img src="assets/img/en.png" alt="English" onclick="setLang('en')" />
+        </div>
       </div>
     </header>
 
@@ -33,14 +41,14 @@
 
           <p style="font-size: large; line-height: 1.6; margin-top: 24px">
             Deine Teilnahme hat mir sehr bei der Durchführung meiner
-            Masterarbeit geholfen. Ich hoffe, dass du durch die Fragen auch selbst
-            Anregungen zur Reflexion mitnehmen konntest. Wenn du Interesse hast,
-            informiere ich dich gerne in einigen Wochen per E-Mail über die
-            Ergebnisse. <br />
+            Masterarbeit geholfen. Ich hoffe, dass du durch die Fragen auch
+            selbst Anregungen zur Reflexion mitnehmen konntest. Wenn du
+            Interesse hast, informiere ich dich gerne in einigen Wochen per
+            E-Mail über die Ergebnisse. <br />
             <br />
             Mit einem Klick auf „Teilnahme beenden“ wird deine Teilnahme
-            endgültig abgeschlossen. Wenn du doch noch einen Eintrag hinzufügen möchtest, klicke
-            bitte auf „Zurück“.
+            endgültig abgeschlossen. Wenn du doch noch einen Eintrag hinzufügen
+            möchtest, klicke bitte auf „Zurück“.
           </p>
           <div>
             <div id="checkbox-datenschutz">
@@ -55,8 +63,18 @@
               </label>
             </div>
             <div style="text-align: center; margin-top: 20px">
-              <button class="closeModal"id="closeModal-teilnahme" style="padding: 15px">Zurück</button>
-              <button class="teilnahmeBtn" id="teilnahmeBeendenBtn" style="padding: 15px">
+              <button
+                class="closeModal"
+                id="closeModal-teilnahme"
+                style="padding: 15px"
+              >
+                Zurück
+              </button>
+              <button
+                class="teilnahmeBtn"
+                id="teilnahmeBeendenBtn"
+                style="padding: 15px"
+              >
                 Teilnahme beenden
               </button>
             </div>
@@ -78,33 +96,45 @@
           <h3>Willkommen!</h3>
 
           <p style="font-size: large; line-height: 1.6; margin-top: 24px">
-            Im Rahmen meiner Masterarbeit lädt dich dieses digitale Probe Kit dazu ein, deinen Alltag für eine Weile bewusster wahrzunehmen.
-            Statt einer klassischen Umfrage begleitet es dich über mehrere Tage hinweg und stellt dir täglich eine neue Frage. 
-            Zusätzlich gibt es Aufgaben, die du mehrfach bearbeiten kannst. <br>
-            Für die Teilnahme hast du insgesamt zwei Wochen Zeit und kannst sie jederzeit beenden.<br>
-            <br>
-            Bei Fragen oder Problemen kannst du mich per E-Mail kontaktieren: <strong>fiona.stuerzekarn@uni-rostock.de</strong>
+            Im Rahmen meiner Masterarbeit lädt dich dieses digitale Probe Kit
+            dazu ein, deinen Alltag für eine Weile bewusster wahrzunehmen. Statt
+            einer klassischen Umfrage begleitet es dich über mehrere Tage hinweg
+            und stellt dir täglich eine neue Frage. Zusätzlich gibt es Aufgaben,
+            die du mehrfach bearbeiten kannst. <br />
+            Für die Teilnahme hast du insgesamt zwei Wochen Zeit und kannst sie
+            jederzeit beenden.<br />
+            <br />
+            Bei Fragen oder Problemen kannst du mich per E-Mail kontaktieren:
+            <strong>fiona.stuerzekarn@uni-rostock.de</strong>
           </p>
-              <div id="checkbox-willkommen">
-              <input
-                type="checkbox"
-                name="willkommensnachricht"
-                id="willkommensnachricht"
-              />
-              <label for="willkommensnachricht" style="font-size: 1.2rem"
-                >Beim nächsten Mal nicht erneut anzeigen.
-              </label>
-            </div>
+          <div id="checkbox-willkommen">
+            <input
+              type="checkbox"
+              name="willkommensnachricht"
+              id="willkommensnachricht"
+            />
+            <label for="willkommensnachricht" style="font-size: 1.2rem"
+              >Beim nächsten Mal nicht erneut anzeigen.
+            </label>
+          </div>
           <div>
             <div style="text-align: center; margin-top: 20px">
-              <button class="closeModal"id="closeModal-willkommen" style="padding: 15px">Schließen</button>
+              <button
+                class="closeModal"
+                id="closeModal-willkommen"
+                style="padding: 15px"
+              >
+                Schließen
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="modal" id="modal-figal" >
-        <div id="modal-figal2" class="modal-content"
+      <div class="modal" id="modal-figal">
+        <div
+          id="modal-figal2"
+          class="modal-content"
           style="
             background: #fff;
             width: 100%;
@@ -118,23 +148,68 @@
         >
           <h3>Danke für deinen Eintrag!</h3>
 
-          <p style="font-size: clamp(14px, 1.2vw, 20px); line-height: 1.6; margin-bottom: 16px">
-            Der folgende Text ist ein Auszug aus "Muße als Forschungsgegenstand" von Günter Figal. Er beschreibt, was geschieht, wenn Muße erlebt wird.
-            Du muss den Text nicht lesen, er ist lediglich als ein weiterer Impuls gedacht, um das Konzept von Muße besser zu verstehen.<br>
+          <p
+            style="
+              font-size: clamp(14px, 1.2vw, 20px);
+              line-height: 1.6;
+              margin-bottom: 16px;
+            "
+          >
+            Der folgende Text ist ein Auszug aus "Muße als Forschungsgegenstand"
+            von Günter Figal. Er beschreibt, was geschieht, wenn Muße erlebt
+            wird. Du muss den Text nicht lesen, er ist lediglich als ein
+            weiterer Impuls gedacht, um das Konzept von Muße besser zu
+            verstehen.<br />
           </p>
-          <p style = "font-family:'Times New Roman', Times, serif; font-size: clamp(14px, 1.2vw, 18px); line-height: 1.6;  overflow-y:auto;   padding-right: 8px; flex: 1; ">Muße ist keine Freizeit, aber sie kann die Freizeit ausfüllen und ihr einen Sinn geben, den sie in faden Standardvergnügungen nicht hat. 
-            Wenn die Muße nicht in dieser Weise sinnvoll erfüllt ist, wird sie zum Müßiggang; sie ist, mit den lateinischen Ausdrücken gesagt, nicht mehr otium, sondern otiositas.
-            Müßiggang kann für eine Weile entlastend, auch lustvoll sein, wird aber auf die Dauer zur quälend unerfüllten, ungefüllten Zeit und so zur Langeweile. Bloßer Müßiggang ist ‚zu nichts‘, während die Muße immer zu etwas ist. <br><br>
-            Aber wie wird das, was man in Muße tut, durch die Muße verändert? Was ist anders, wenn man etwas in Muße tut? Man ist in seinem Tun auf eigentümliche Weise frei, so dass zur Muße wesentlich Freiheit gehört. Wer Muße hat, ist frei davon, etwas zu müssen, nicht absolut, sondern in je bestimmter Hinsicht. Mit Muße einer Arbeit nachgehen können, das heißt unter anderem: keinem Zwang zu unterstehen und keine bestimmten Erwartungen erfüllen zu müssen. Sofern eine Tätigkeit der Versorgung, dem Lebensunterhalt, der Karriere dient, steht sie unter Erfolgsdruck, und sobald ein solcher Druck spürbar ist, wie geringfügig auch immer, kann sich das Tun nicht frei entfalten. Erst ohne inneren oder äußeren Druck kann man sich einer Sache wirklich zuwenden, derart, dass es nun wesentlich um diese Sache geht. Freiheit von sachfremden Aspekten des Tuns ist Freiheit zur Sache. Insofern kann ein Tun in Muße ein in ganz besonderer Weise erfülltes Tun sein, in dem die eigenen Fähigkeiten frei zur Geltung kommen.
+          <p
+            style="
+              font-family: &quot;Times New Roman&quot;, Times, serif;
+              font-size: clamp(14px, 1.2vw, 18px);
+              line-height: 1.6;
+              overflow-y: auto;
+              padding-right: 8px;
+              flex: 1;
+            "
+          >
+            Muße ist keine Freizeit, aber sie kann die Freizeit ausfüllen und
+            ihr einen Sinn geben, den sie in faden Standardvergnügungen nicht
+            hat. Wenn die Muße nicht in dieser Weise sinnvoll erfüllt ist, wird
+            sie zum Müßiggang; sie ist, mit den lateinischen Ausdrücken gesagt,
+            nicht mehr otium, sondern otiositas. Müßiggang kann für eine Weile
+            entlastend, auch lustvoll sein, wird aber auf die Dauer zur quälend
+            unerfüllten, ungefüllten Zeit und so zur Langeweile. Bloßer
+            Müßiggang ist ‚zu nichts‘, während die Muße immer zu etwas ist.
+            <br /><br />
+            Aber wie wird das, was man in Muße tut, durch die Muße verändert?
+            Was ist anders, wenn man etwas in Muße tut? Man ist in seinem Tun
+            auf eigentümliche Weise frei, so dass zur Muße wesentlich Freiheit
+            gehört. Wer Muße hat, ist frei davon, etwas zu müssen, nicht
+            absolut, sondern in je bestimmter Hinsicht. Mit Muße einer Arbeit
+            nachgehen können, das heißt unter anderem: keinem Zwang zu
+            unterstehen und keine bestimmten Erwartungen erfüllen zu müssen.
+            Sofern eine Tätigkeit der Versorgung, dem Lebensunterhalt, der
+            Karriere dient, steht sie unter Erfolgsdruck, und sobald ein solcher
+            Druck spürbar ist, wie geringfügig auch immer, kann sich das Tun
+            nicht frei entfalten. Erst ohne inneren oder äußeren Druck kann man
+            sich einer Sache wirklich zuwenden, derart, dass es nun wesentlich
+            um diese Sache geht. Freiheit von sachfremden Aspekten des Tuns ist
+            Freiheit zur Sache. Insofern kann ein Tun in Muße ein in ganz
+            besonderer Weise erfülltes Tun sein, in dem die eigenen Fähigkeiten
+            frei zur Geltung kommen.
           </p>
           <div>
             <div style="text-align: center; margin-top: 20px">
-              <button class="closeModal"id="closeModal-figal" style="padding: 15px">Schließen</button>
+              <button
+                class="closeModal"
+                id="closeModal-figal"
+                style="padding: 15px"
+              >
+                Schließen
+              </button>
             </div>
           </div>
         </div>
       </div>
-
 
       <div id="tasks">
         <div class="home-container" id="daily-box"></div>
@@ -145,8 +220,7 @@
           src="assets/sounds/new-notification-018-363746.mp3"
         ></audio>
 
-        <div class="home-container" id="musse-box">
-        </div>
+        <div class="home-container" id="musse-box"></div>
       </div>
       <div id="dailies">
         <h3 id="bild-hochladen"></h3>
@@ -173,6 +247,5 @@
     <script src="js/home.js"></script>
     <script src="js/timer.js"></script>
     <script src="js/musse.js"></script>
-
   </body>
 </html>

@@ -37,6 +37,42 @@ p.tasks-text {
   font-size: clamp(14px, 1.2vw, 18px);
 }
 
+#lang-switch-login {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#lang-switch-header {
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.lang-switch img {
+  width: 28px;
+  height: auto;
+  cursor: pointer;
+}
+
+.lang-switch img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.lang-switch img.active {
+  opacity: 1;
+}
+
+
 input[type="email"],
 input[type="password"],
 textarea,
@@ -197,7 +233,6 @@ form#antwort-form {
 }
 
 #dailyquestion-img {
-  margin-top: 16px;
   cursor: zoom-in;
 }
 
@@ -259,6 +294,15 @@ a,
 
 a:hover,
 #datenschutz-link:hover {
+  text-decoration: underline;
+}
+
+#magazinlink {
+  font-size: clamp(12px, 0.9vw, 16px);
+}
+
+#magazinurl {
+  font-size: clamp(12px, 0.9vw, 16px);
   text-decoration: underline;
 }
 
