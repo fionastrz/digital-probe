@@ -2,6 +2,7 @@
 <html lang="de">
   <head>
     <title>Startseite</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="css/style.css" />
@@ -12,16 +13,18 @@
     <div id="toast-container"></div>
 
     <header class="header">
-      <div><h1>Digitales Probe Kit</h1></div>
+      <div><h1 data-i18n="title"></h1></div>
       <div style="display: flex; flex-direction: row; gap: 20px">
-        <button class="teilnahmeBtn" id="teilnahmeBtn">
-          Teilnahme beenden
-        </button>
-        <button id="logoutBtn">Logout</button>
-         <div class="lang-switch" id="lang-switch-header">
+        <button
+          class="teilnahmeBtn"
+          id="teilnahmeBtn"
+          data-i18n="endParticipation"
+        ></button>
+        <button id="logoutBtn" data-i18n="logout"></button>
+        <!-- <div class="lang-switch" id="lang-switch-header">
           <img src="assets/img/de.png" alt="Deutsch" onclick="setLang('de')" />
           <img src="assets/img/en.png" alt="English" onclick="setLang('en')" />
-        </div>
+        </div> -->
       </div>
     </header>
 
@@ -37,19 +40,16 @@
             border-radius: 8px;
           "
         >
-          <h3>Vielen Dank für deine Teilnahme!</h3>
+          <h3 data-i18n="thankYouParticipationTitle"></h3>
 
-          <p style="font-size: large; line-height: 1.6; margin-top: 24px">
-            Deine Teilnahme hat mir sehr bei der Durchführung meiner
-            Masterarbeit geholfen. Ich hoffe, dass du durch die Fragen auch
-            selbst Anregungen zur Reflexion mitnehmen konntest. Wenn du
-            Interesse hast, informiere ich dich gerne in einigen Wochen per
-            E-Mail über die Ergebnisse. <br />
-            <br />
-            Mit einem Klick auf „Teilnahme beenden“ wird deine Teilnahme
-            endgültig abgeschlossen. Wenn du doch noch einen Eintrag hinzufügen
-            möchtest, klicke bitte auf „Zurück“.
-          </p>
+          <p
+            style="font-size: clamp(14px, 1.2vw, 20px); line-height: 1.6; margin-top: 24px"
+            data-i18n="thankYouParticipationText1"
+          ></p>
+          <p
+            style="font-size: clamp(14px, 1.2vw, 20px); line-height: 1.6; margin-top: 24px"
+            data-i18n="thankYouParticipationText2"
+          ></p>
           <div>
             <div id="checkbox-datenschutz">
               <input
@@ -58,8 +58,11 @@
                 id="benachrichtigung"
                 required
               />
-              <label for="benachrichtigung" style="font-size: 1.2rem"
-                >Ich möchte per E-Mail benachrichtigt werden.
+              <label
+                for="benachrichtigung"
+                style="font-size: clamp(14px, 1.2vw, 20px)"
+                data-i18n="emailNotificationOptIn"
+              >
               </label>
             </div>
             <div style="text-align: center; margin-top: 20px">
@@ -67,16 +70,14 @@
                 class="closeModal"
                 id="closeModal-teilnahme"
                 style="padding: 15px"
-              >
-                Zurück
-              </button>
+                data-i18n="backButton"
+              ></button>
               <button
                 class="teilnahmeBtn"
                 id="teilnahmeBeendenBtn"
                 style="padding: 15px"
-              >
-                Teilnahme beenden
-              </button>
+                data-i18n="endParticipation"
+              ></button>
             </div>
           </div>
         </div>
@@ -93,29 +94,22 @@
             border-radius: 8px;
           "
         >
-          <h3>Willkommen!</h3>
+          <h3 data-i18n="welcome"></h3>
 
-          <p style="font-size: large; line-height: 1.6; margin-top: 24px">
-            Im Rahmen meiner Masterarbeit lädt dich dieses digitale Probe Kit
-            dazu ein, deinen Alltag für eine Weile bewusster wahrzunehmen. Statt
-            einer klassischen Umfrage begleitet es dich über mehrere Tage hinweg
-            und stellt dir täglich eine neue Frage. Zusätzlich gibt es Aufgaben,
-            die du mehrfach bearbeiten kannst. <br />
-            Für die Teilnahme hast du insgesamt zwei Wochen Zeit und kannst sie
-            jederzeit beenden.<br />
-            <br />
-            Bei Fragen oder Problemen kannst du mich per E-Mail kontaktieren:
-            <strong>fiona.stuerzekarn@uni-rostock.de</strong>
-          </p>
+          <p
+            style="font-size: clamp(14px, 1.2vw, 20px); line-height: 1.6; margin-top: 24px"
+            data-i18n="welcomeText"
+          ></p>
           <div id="checkbox-willkommen">
             <input
               type="checkbox"
               name="willkommensnachricht"
               id="willkommensnachricht"
-            />
-            <label for="willkommensnachricht" style="font-size: 1.2rem"
-              >Beim nächsten Mal nicht erneut anzeigen.
-            </label>
+            /><label
+              for="willkommensnachricht"
+              style="font-size: 1.2rem"
+              data-i18n="dontShowAgain"
+            ></label>
           </div>
           <div>
             <div style="text-align: center; margin-top: 20px">
@@ -123,9 +117,8 @@
                 class="closeModal"
                 id="closeModal-willkommen"
                 style="padding: 15px"
-              >
-                Schließen
-              </button>
+                data-i18n="closeButton"
+              ></button>
             </div>
           </div>
         </div>
@@ -146,66 +139,38 @@
             flex-direction: column;
           "
         >
-          <h3>Danke für deinen Eintrag!</h3>
+          <h3 data-i18n="thankYouEntryTitle"></h3>
 
           <p
+            data-i18n="figalText"
             style="
               font-size: clamp(14px, 1.2vw, 20px);
               line-height: 1.6;
               margin-bottom: 16px;
             "
-          >
-            Der folgende Text ist ein Auszug aus "Muße als Forschungsgegenstand"
-            von Günter Figal. Er beschreibt, was geschieht, wenn Muße erlebt
-            wird. Du muss den Text nicht lesen, er ist lediglich als ein
-            weiterer Impuls gedacht, um das Konzept von Muße besser zu
-            verstehen.<br />
-          </p>
+          ></p>
           <p
+            data-i18n="figalMusse1"
             style="
               font-family: &quot;Times New Roman&quot;, Times, serif;
               font-size: clamp(14px, 1.2vw, 18px);
               line-height: 1.6;
               overflow-y: auto;
               padding-right: 8px;
+              white-space: pre-line;
+
+;
               flex: 1;
             "
-          >
-            Muße ist keine Freizeit, aber sie kann die Freizeit ausfüllen und
-            ihr einen Sinn geben, den sie in faden Standardvergnügungen nicht
-            hat. Wenn die Muße nicht in dieser Weise sinnvoll erfüllt ist, wird
-            sie zum Müßiggang; sie ist, mit den lateinischen Ausdrücken gesagt,
-            nicht mehr otium, sondern otiositas. Müßiggang kann für eine Weile
-            entlastend, auch lustvoll sein, wird aber auf die Dauer zur quälend
-            unerfüllten, ungefüllten Zeit und so zur Langeweile. Bloßer
-            Müßiggang ist ‚zu nichts‘, während die Muße immer zu etwas ist.
-            <br /><br />
-            Aber wie wird das, was man in Muße tut, durch die Muße verändert?
-            Was ist anders, wenn man etwas in Muße tut? Man ist in seinem Tun
-            auf eigentümliche Weise frei, so dass zur Muße wesentlich Freiheit
-            gehört. Wer Muße hat, ist frei davon, etwas zu müssen, nicht
-            absolut, sondern in je bestimmter Hinsicht. Mit Muße einer Arbeit
-            nachgehen können, das heißt unter anderem: keinem Zwang zu
-            unterstehen und keine bestimmten Erwartungen erfüllen zu müssen.
-            Sofern eine Tätigkeit der Versorgung, dem Lebensunterhalt, der
-            Karriere dient, steht sie unter Erfolgsdruck, und sobald ein solcher
-            Druck spürbar ist, wie geringfügig auch immer, kann sich das Tun
-            nicht frei entfalten. Erst ohne inneren oder äußeren Druck kann man
-            sich einer Sache wirklich zuwenden, derart, dass es nun wesentlich
-            um diese Sache geht. Freiheit von sachfremden Aspekten des Tuns ist
-            Freiheit zur Sache. Insofern kann ein Tun in Muße ein in ganz
-            besonderer Weise erfülltes Tun sein, in dem die eigenen Fähigkeiten
-            frei zur Geltung kommen.
-          </p>
+          ></p>
           <div>
             <div style="text-align: center; margin-top: 20px">
               <button
                 class="closeModal"
                 id="closeModal-figal"
                 style="padding: 15px"
-              >
-                Schließen
-              </button>
+                data-i18n="closeButton"
+              ></button>
             </div>
           </div>
         </div>
@@ -226,19 +191,19 @@
         <h3 id="bild-hochladen"></h3>
         <div id="images-container">
           <div class="image-card" id="card1">
-            <h3 class="daynr">Tag 1</h3>
+            <h3 class="daynr" data-i18n="day1"></h3>
           </div>
           <div class="image-card" id="card2">
-            <h3>Tag 2</h3>
+            <h3 data-i18n="day2"></h3>
           </div>
           <div class="image-card" id="card3">
-            <h3>Tag 3</h3>
+            <h3 data-i18n="day3"></h3>
           </div>
           <div class="image-card" id="card4">
-            <h3>Tag 4</h3>
+            <h3 data-i18n="day4"></h3>
           </div>
           <div class="image-card" id="card5">
-            <h3>Tag 5</h3>
+            <h3 data-i18n="day5"></h3>
           </div>
         </div>
       </div>

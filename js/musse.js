@@ -4,15 +4,15 @@
 renderMusseTask();
 
 function renderMusseTask() {
+  const t = TEXT[getLang()];
+
   const musseBox = document.getElementById("musse-box");
   musseBox.innerHTML = `
-    <h2 class="tasks-header">Entdecken der Muße</h2>
+    <h2 class="tasks-header">${t.musseTitle}</h2>
     <p class="tasks-text" id="musse-text">
-    Unser Alltag ist oft von Zeitdruck und Erwartungen geprägt. Während wir einer Tätigkeit nachgehen, sind die Gedanken häufig schon bei der nächsten Aufgabe.
-    Diese Aufgabe lädt dich dazu ein, dieses Denkmuster zu unterbrechen und dich einer Tätigkeit ohne Ziel, Zeitdruck oder Leistungsansprüche zu widmen, zum Beispiel ein Hobby oder etwas, was du gerne machst.<br><br>
-    Deine Erfahrung kannst du dann zu einem passenden Zeitpunkt hier festhalten - gerne auch mehrfach.
+    ${t.musseIntro}
   </p>
-  <button class="task-button" id="musseBtn">Eindrücke notieren</button>
+  <button class="task-button" id="musseBtn">${t.musseButton}</button>
   `
 
   document.getElementById("musseBtn").addEventListener("click", openMusseForm);
@@ -21,16 +21,12 @@ function renderMusseTask() {
 function openMusseForm() {
   const musseBox = document.getElementById("musse-box");
   musseBox.innerHTML = `
-        <h2 class="tasks-header">Entdecken der Muße</h2>
+        <h2 class="tasks-header">${t.musseTitle}</h2>
         <div class="reflection-header">
-          <p class="tasks-text" id="musse-text">
-           Schreibe auf, was dir während dieser Tätigkeit aufgefallen ist oder wie sie sich angefühlt hat.
-          </p>
+          <p class="tasks-text" id="musse-text">${t.musseWritePrompt}</p>
               <span class="hint-icon" id="hintIcon">&quest;
     <span class="hint-text" id="hintText">
-    Falls dir das Beantworten dieser Frage schwerfällt, kannst du zum Beispiel schreiben, wie du die
-Tätgkeit erlebt hast und ob sich währenddessen dein Zeitempfinden verändert hat. Vielleicht gab es auch etwas, 
-was dein Erleben von Muße erschwert hat oder es sind zwischenzeitlich sind doch Erwartungen aufgetaucht.
+    ${t.musseHint}
     </span>
   </span>
         </div>
@@ -39,11 +35,11 @@ was dein Erleben von Muße erschwert hat oder es sind zwischenzeitlich sind doch
           name="antwort-feld-musse" 
           id="antwort-feld-musse" 
           maxlength="1000" 
-          placeholder="Schreibe deine Gedanken auf ..." 
+          placeholder="${t.placeholder}"
           required></textarea>
-        <button class="task-button" type="submit">Absenden</button>
+        <button class="task-button" type="submit">${t.submitButton}</button>
         </form>
-      <button id="cancelBtn" class="stop-button">Zurück</button>
+      <button id="cancelBtn" class="stop-button">${t.backToTask}</button>
         `;
 
     document
@@ -78,8 +74,8 @@ async function handleMusseFormSubmit(e) {
 
 
     musseBox.innerHTML =
-      `<h2 class="placeholder">Vielen Dank für deine Antwort. </h2>
-        <button id="cancelBtn" class="stop-button">Zurück zur Aufgabe</button>
+      `<h2 class="placeholder">${t.musseThankYou}</h2>
+        <button id="cancelBtn" class="stop-button">${t.backToTask}</button>
       `
       document.getElementById("cancelBtn").addEventListener("click", renderMusseTask);
 

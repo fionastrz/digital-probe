@@ -9,23 +9,22 @@ renderTimerTask();
 
 function renderTimerTask() {
   timerBox.innerHTML = `
-      <h2 class="tasks-header">Bewusst Innehalten</h2>
+      <h2 class="tasks-header">${t.timerTitle}</h2>
       <p class="tasks-text">
-        Nimm dir ein paar Minuten Zeit, um bewusst nichts zu tun. Nach Ablauf der Zeit wirst du gebeten, deine Gedanken und Gefühle, die während dieser Zeit aufgekommen sind, auszuschreiben
-      </p>
+        ${t.timerIntro}
     <div class="time-intent">
       <p class="tasks-text">
-        Wie viel Zeit möchtest du dir nehmen?
+        ${t.timerSelectTime}
       </p>
 
       <div class="time-value">
         <button id="leftBtn" class="timer-button">&minus;</button>
-        <strong><span id="minutes">5</span> Minuten</strong>
+        <strong><span id="minutes">5</span> ${t.minutes}</strong>
         <button id="rightBtn" class="timer-button">&plus;</button>
       </div>
 
     </div>
-      <button class="task-button" id="startBtn">Starten</button>        
+      <button class="task-button" id="startBtn">${t.startTimer}</button>        
   `;
   document.getElementById("rightBtn").addEventListener("click", increment);
   document.getElementById("leftBtn").addEventListener("click", decrement);
@@ -35,16 +34,14 @@ function renderTimerTask() {
 
 function renderReflectionForm() {
   timerBox.innerHTML = `
-    <h2 class="tasks-header">Bewusst Innehalten</h2>
+    <h2 class="tasks-header">${t.timerTitle}</h2>
     <div class="reflection-header">
     <p class="tasks-text">
-      Wie hast du die Zeit in den letzten <strong>${timerMinutes} Minuten</strong> erlebt?
+      ${t.timerReflection1} <strong>${timerMinutes} ${t.minutes}</strong> ${t.timerReflection2}
     </p>
     <span class="hint-icon" id="hintIcon">&quest;
     <span class="hint-text" id="hintText">
-    Wenn dir das Schreiben schwerfällt, kannst du beschreiben, wie sich die Zeit für dich angefühlt hat. 
-    Vielleicht kam sie dir lang oder kurz vor, angenehm oder unangenehm. 
-    Oder du beschreibst Gedanken, die dir dabei durch den Kopf gingen.
+    ${t.timerHint}
     </span>
   </span>
   </div>
@@ -52,10 +49,10 @@ function renderReflectionForm() {
       <textarea
         id="antwort-feld-timer"
         maxlength="1000"
-        placeholder="Schreibe deine Gedanken auf …"
+        placeholder="${t.placeholder}"
         required></textarea>
 
-      <button class="task-button" type="submit">Absenden</button>
+      <button class="task-button" type="submit">${t.submitButton}</button>
     </form>
   `;
 
@@ -88,9 +85,9 @@ function startTimer() {
   disableAllButtons();
 
   timerBox.innerHTML = `
-    <h2 class="tasks-header">Bewusst Innehalten</h2>
-    <p class="tasks-text">Der Timer läuft jetzt. Nach Ablauf hörst du einen sanften Benachrichtigungston - dann kannst du kurz festhalten, wie es für dich war.</p>
-    <button id="stopBtn" class="stop-button">Abbrechen</button>
+    <h2 class="tasks-header">${t.timerTitle}</h2>
+    <p class="tasks-text">${t.timerRunningInfo}</p>
+    <button id="stopBtn" class="stop-button">${t.cancelButton}</button>
   `;
 
   document.getElementById("stopBtn").addEventListener("click", stopTimer);
@@ -159,8 +156,8 @@ async function handleFormSubmit(e) {
 
     showToast("Deine Antwort wurde gespeichert", "success");
     timerBox.innerHTML =
-      `<h2 class="placeholder">Danke für deine Antwort. Du kannst diesen Timer beliebig oft starten und verschiedene Zeiten ausprobieren.</h2>
-      <button id="cancelBtnTimer" class="stop-button">Zurück</button>`
+      `<h2 class="placeholder">${t.timerThankYou}</h2>
+      <button id="cancelBtnTimer" class="stop-button">${t.backToTask}</button>`
       document.getElementById("cancelBtnTimer").addEventListener("click", stopTimer);
 
 

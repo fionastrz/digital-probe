@@ -230,46 +230,45 @@ async function checkDay() {
     isAlreadyAnswered = today === lastEntryDate;
   }
 
-  if (isAlreadyAnswered) {
-    showDailyTask(3);
+  if (isAlreadyAnswered == false) {
+    showDailyTask(dayCounter);
   } else {
-    dailyBox.innerHTML = `<h2 class="placeholder">Du hast die täglichen Fragen für heute bereits ausgefüllt. Schaue morgen wieder vorbei!</h2>`;
+    dailyBox.innerHTML = `<h2 class="placeholder">${t.dailyAlreadyDone}</h2>`;
   }
 
   return { dayCounter, isAlreadyAnswered };
 }
+const lang = getLang();
+const t = TEXT[getLang()];
 
 function showDailyTask(dayCounter) {
-  const lang = getLang();
-
   if (dayCounter >= 6) {
     const dailyBox = document.getElementById("daily-box");
     dailyBox.replaceChildren();
     const successtext = document.createElement("h2");
-    successtext.textContent = `Du hast alle fünf Tagesfragen beantwortet. Danke, dass du dir die Zeit genommen hast.`;
+    successtext.textContent = t.allQuestionsAnswered;
     dailyBox.appendChild(successtext);
   }
   dailyBox.innerHTML = `
-    <h2 class="tasks-header">Tag ${dayCounter}</h2>
+    <h2 class="tasks-header">${t.day} ${dayCounter}</h2>
     <form id="antwort-form">
 
       <h3 id="dailyquestion">
-      Was ist dir vom heutigen Tag besonders in Erinnerung geblieben?
-    </h3>
+      ${t.dailyQuestionTitle}</h3>
 
     <textarea
       id="daily-feld"
       name="daily-feld"
-      placeholder="Schreibe deine Gedanken auf ..."
+      placeholder="${t.placeholder}"
       maxlength="1000"
       required
     ></textarea>
     <div style="display: flex; flex-direction: column;">
-    <p style="margin:0 auto">Gerne kannst du deinen heutigen Eintrag auch durch Fotos ergänzen:</p>
+    <p style="margin:0 auto">${t.addPhotosHint}</p>
     <input type="file" id="upload-files" multiple accept="image/*" />
     </div>
     <h3 id="dailyquestion">
-      ${daily_questions[getLang()][dayCounter].text}
+      ${daily_questions[lang][dayCounter].text}
     </h3>
     ${
       daily_questions[lang][dayCounter].img
@@ -279,7 +278,7 @@ function showDailyTask(dayCounter) {
     <textarea
       id="antwort-feld"
       name="antwort-feld"
-      placeholder="Schreibe deine Gedanken auf ..."
+      placeholder= "${t.placeholder}"
       maxlength="1000"
       required
     ></textarea>
@@ -301,7 +300,7 @@ async function uploadFile(file, fileName) {
     .from("images")
     .upload(fileName, file);
   if (error) {
-    console.log(error)
+    console.log(error);
     throw error;
   }
 }
@@ -309,7 +308,7 @@ async function uploadFile(file, fileName) {
 // Formular absenden
 async function submitEntry(e) {
   e.preventDefault();
- 
+
   const diary_antwort = document.getElementById("daily-feld").value;
   const antwort = document.getElementById("antwort-feld").value;
   const fileInput = document.getElementById("upload-files");
@@ -318,7 +317,7 @@ async function submitEntry(e) {
   const uploadedFileNames = [];
 
   if (files.length > 0) {
-    const uploadPromises = Array.from(files).map(file => {
+    const uploadPromises = Array.from(files).map((file) => {
       const fileName = `${currentUser.id}/${Date.now()}-${crypto.randomUUID()}-${file.name}`;
       uploadedFileNames.push(fileName);
       return uploadFile(file, fileName);
@@ -326,10 +325,7 @@ async function submitEntry(e) {
 
     await Promise.all(uploadPromises);
     console.log(uploadedFileNames);
-
   }
-
-
 
   // Eingaben in Tabelle speichern
   try {
@@ -378,7 +374,7 @@ async function loadUserImages() {
       comment.textContent = entry.textarea_response;
 
       const question_header = document.createElement("h3");
-      question_header.textContent = `${short_questions[counter]}`;
+      question_header.textContent = `${short_questions[lang][counter]}`;
       const response = document.createElement("p");
       response.textContent = questionantwort;
 

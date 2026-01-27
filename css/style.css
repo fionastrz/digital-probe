@@ -1,6 +1,6 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #cfdee9;
+  background: #bcd0de;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -411,9 +411,7 @@ gap: 12px;
 
   #modal-figal2 {
     max-height: 50vh;
-
   }
-
 }
 
 @media (max-width: 600px) {
@@ -516,7 +514,7 @@ gap: 12px;
   width: 20vw;
   padding: 15px;
   background: #f0f0f0;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 8px;
   font-size: clamp(14px, 1vw, 18px);
   line-height: 1.4;
