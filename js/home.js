@@ -247,7 +247,7 @@ function showDailyTask(dayCounter) {
     dailyBox?.replaceChildren();
     const successtext = document.createElement("h2");
     successtext.textContent = t.allQuestionsAnswered;
-    dailyBox.appendChild(successtext);
+    dailyBox?.appendChild(successtext);
     return;
   }
   dailyBox.innerHTML = `
