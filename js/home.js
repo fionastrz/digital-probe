@@ -244,7 +244,7 @@ const t = TEXT[getLang()];
 function showDailyTask(dayCounter) {
   if (dayCounter >= 6) {
     const dailyBox = document.getElementById("daily-box");
-    dailyBox.replaceChildren();
+    dailyBox?.replaceChildren();
     const successtext = document.createElement("h2");
     successtext.textContent = t.allQuestionsAnswered;
     dailyBox.appendChild(successtext);
