@@ -119,7 +119,6 @@ function attachRegisterHandler() {
         .insert([
           {
             user_id: data.user.id,
-            email: email,
             age_group: ageGroup
           }
         ]);
