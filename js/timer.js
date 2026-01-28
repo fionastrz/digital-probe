@@ -114,13 +114,13 @@ function checkTimer() {
 
 function stopTimer() {
   clearInterval(timerInterval);
-  enableAllButtons();
   renderTimerTask();
 }
 
 function finishTimer() {
   clearInterval(timerInterval);
-  alarmSound.play();
+  alarmSound.play();  
+  enableAllButtons();
   renderReflectionForm();
 }
 

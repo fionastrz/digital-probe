@@ -248,6 +248,7 @@ function showDailyTask(dayCounter) {
     const successtext = document.createElement("h2");
     successtext.textContent = t.allQuestionsAnswered;
     dailyBox.appendChild(successtext);
+    return;
   }
   dailyBox.innerHTML = `
     <h2 class="tasks-header">${t.day} ${dayCounter}</h2>
