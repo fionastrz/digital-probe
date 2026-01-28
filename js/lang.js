@@ -75,14 +75,10 @@ const TEXT = {
     welcome: "Willkommen!",
 
     welcomeText: `
-      Im Rahmen meiner Masterarbeit lädt dich dieses digitale Probe Kit
-      dazu ein, deinen Alltag für eine Weile bewusster wahrzunehmen.
-      Im Gegensatz zu einer klassischen Umfrage begleitet es dich über mehrere
-      Tage hinweg und stellt dir täglich eine neue Frage. Zusätzlich
-      gibt es Aufgaben, die du mehrfach bearbeiten kannst.<br>
-      Für die Teilnahme hast du insgesamt zwei Wochen Zeit und kannst
-      sie jederzeit beenden.<br><br>
-      Bei Fragen oder Problemen kannst du mich per E-Mail kontaktieren: <strong>fiona.stuerzekarn@uni-rostock.de</strong>
+Im Rahmen meiner Masterarbeit lädt dich dieses digitale Probe Kit dazu ein, deinen Alltag für eine Weile bewusster wahrzunehmen. Im Gegensatz zu einer klassischen Umfrage begleitet es dich über mehrere Tage hinweg und stellt dir täglich eine neue Frage. Zusätzlich gibt es Aufgaben, die du mehrfach bearbeiten kannst.
+Für die Teilnahme hast du insgesamt zwei Wochen Zeit und kannst sie jederzeit beenden.
+
+Bei Fragen oder Problemen kannst du mich per E-Mail kontaktieren: fiona.stuerzekarn@uni-rostock.de
     `,
 
     // Tagebuch / Eintrag
@@ -237,16 +233,11 @@ Aber wie wird das, was man in Muße tut, durch die Muße verändert? Was ist and
     // Welcome / introduction
     welcome: "Welcome!",
     welcomeText: `
-      As part of my master's thesis, this digital probe kit invites you
-      to become more aware of your everyday life for a period of time.
-      Instead of a traditional survey, it accompanies you over several
-      days and presents a new question each day. In addition, there are
-      tasks that you can complete multiple times.<br>
-      You have a total of two weeks to participate and can end your
-      participation at any time.<br><br>
-      If you have any questions or problems, you can contact me by
-      email: <strong>fiona.stuerzekarn@uni-rostock.de</strong>
-    `,
+As part of my master's thesis, this digital probe kit invites you to become more aware of your everyday life for a period of time. Instead of a traditional survey, it accompanies you over several days and presents a new question each day. In addition, there are tasks that you can complete multiple times.
+You have a total of two weeks to participate and can end your participation at any time.
+
+If you have any questions or problems, you can contact me by email: fiona.stuerzekarn@uni-rostock.de
+`,
 
     // Diary / entry
     thankYouEntryTitle: "Thank you for your entry!",
